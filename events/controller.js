@@ -4,20 +4,10 @@ const QueryHelper = require('../util/QueryHelper');
 
 
 class EventsController {
-  static async list(query) {
-    const queryHelper = new QueryHelper(EventOccurrencesModel, query);
-    const qb = queryHelper.qb;
-    qb.distinct(raw('ON (start_time) *'));
-
-    if (query.after_date) {
-      qb.where('start_time', '>=', query.after_date);
-      delete query.after_date;
-      qb.andWhere(query);
-    } else {
-      qb.where(query);
-    }
-    qb.orderBy('start_time');
-    return await qb;
+  static async list(query, builder = EventOccurrencesModel.query()) {
+    return builder.distinct(raw('ON (start_time) *'))
+      .orderBy('start_time')
+      .where(query);
   }
 }
 
