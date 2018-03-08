@@ -1,6 +1,6 @@
 const builderHandler = require('./builderHandler');
 
-module.exports = (Model) => (req, res, next) => {
+module.exports = Model => (req, res, next) => {
   builderHandler(Model)(req, res, () => {
     const qb = res.locals.qb;
     if (req.query.page) {
@@ -10,4 +10,4 @@ module.exports = (Model) => (req, res, next) => {
     }
     next();
   });
-}
+};

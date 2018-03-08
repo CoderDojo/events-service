@@ -1,6 +1,5 @@
 const { raw } = require('objection');
 const EventOccurrencesModel = require('./models/EventOccurrencesModel');
-const QueryHelper = require('../util/QueryHelper');
 
 
 class EventsController {

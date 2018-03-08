@@ -4,11 +4,10 @@ const Knex = require('knex');
 const { knexSnakeCaseMappers, Model } = require('objection');
 
 
-const dbConfig = require('./config/db.json')
+const dbConfig = require('./config/db.json');
 const events = require('./events/routes');
 
 const app = express();
-const router = express.Router();
 const knex = Knex(Object.assign(dbConfig, { ...knexSnakeCaseMappers() }));
 Model.knex(knex);
 

@@ -16,6 +16,7 @@ class EventOccurrencesModel extends Model {
           super.where('startTime', '<=', query.beforeDate);
           delete query.beforeDate;
         }
+        delete query.utcOffset;
         return super.where(query);
       }
     };

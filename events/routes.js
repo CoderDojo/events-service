@@ -1,10 +1,12 @@
 const express = require('express');
+const validationsList = require('./validations/list');
+const handlersList = require('./handlers/list');
 
 const validations = {
-  list: require('./validations/list'),
+  list: validationsList,
 };
 const handlers = {
-  list: require('./handlers/list'),
+  list: handlersList,
 };
 
 const router = express.Router();
