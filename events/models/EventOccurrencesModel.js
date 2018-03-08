@@ -8,14 +8,15 @@ class EventOccurrencesModel extends Model {
   static get QueryBuilder() {
     return class extends QueryBuilder {
       where(query) {
-        if (query.after_date) {
-          super.where('start_time', '>=', query.after_date);
-          delete query.after_date;
+        if (query.afterDate) {
+          super.where('endTime', '>=', query.afterDate);
+          delete query.afterDate;
         }
-        if (query.before_date) {
-          super.where('start_time', '<=', query.before_date);
-          delete query.before_date;
+        if (query.beforeDate) {
+          super.where('startTime', '<=', query.beforeDate);
+          delete query.beforeDate;
         }
+        delete query.utcOffset;
         return super.where(query);
       }
     };

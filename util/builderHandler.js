@@ -1,4 +1,4 @@
-module.exports = (Model) => (req, res, next) => {
+module.exports = Model => (req, res, next) => {
   const qb = Model.query();
   if (req.query.orderBy) {
     qb.orderBy(req.query.orderBy);
@@ -8,4 +8,4 @@ module.exports = (Model) => (req, res, next) => {
   }
   res.locals.qb = qb;
   next();
-}
+};
