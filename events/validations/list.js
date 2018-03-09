@@ -34,9 +34,8 @@ module.exports = [
       in: ['query'],
       toInt: true,
       custom: {
-        options(value, { req }) {
-          return !(req.query.query.beforeDate || req.query.query.afterDate) || !!value;
-        },
+        options: (value, { req }) =>
+          !(req.query.query.beforeDate || req.query.query.afterDate) || typeof value === 'number',
         errorMessage: 'query[utcOffset] is required when after_date or before_date are specified',
       },
     },
