@@ -11,7 +11,10 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "lint": "eslint .",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "unit": "HOSTNAME=http://platform.local mocha -t 3000 --require ./test/helper.js ./test/unit --recursive --reporter=nyan --forbid-pending",
+    "int": "NODE_ENV=test mocha -t 10000 --require ./test/helper.js ./test/integration --recursive --reporter=nyan --forbid-pending",
+    "test": "yarn unit && yarn int"
   },
   "lint-staged": {
     "*.js": [
@@ -28,6 +31,7 @@
     "eslint-plugin-jsx-a11y": "5.1.1",
     "eslint-plugin-node": "^6.0.1",
     "eslint-plugin-react": "^7.7.0",
+    "husky": "^0.14.3",
     "mocha": "^5.0.1",
     "nodemon": "^1.17.1",
     "proxyquire": "^2.0.0",
@@ -40,6 +44,7 @@
     "express": "^4.16.2",
     "express-validator": "^5.0.2",
     "knex": "^0.14.4",
+    "lint-staged": "^7.0.0",
     "moment": "^2.21.0",
     "objection": "^1.0.0",
     "pg": "^7.4.1"
