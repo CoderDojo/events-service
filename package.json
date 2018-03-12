@@ -9,7 +9,7 @@
   "private": true,
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js",
+    "dev": "nodemon -x \"node --trace-warnings index.js\"",
     "lint": "eslint .",
     "precommit": "lint-staged",
     "unit": "HOSTNAME=http://platform.local mocha -t 3000 --require ./test/helper.js ./test/unit --recursive --reporter=nyan --forbid-pending --exit",
