@@ -19,6 +19,13 @@ jobs:
           key: dependency-cache-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
+  test:
+    machine: true
+    working_directory: ~/events-service
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "yarn.lock" }}
       - run:
           name: Install Docker Compose
           command: |
