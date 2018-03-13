@@ -12,9 +12,9 @@
     "dev": "nodemon index.js",
     "lint": "eslint .",
     "precommit": "lint-staged",
-    "unit": "HOSTNAME=http://platform.local mocha -t 3000 --require ./test/helper.js ./test/unit --recursive --reporter=nyan --forbid-pending",
-    "int": "NODE_ENV=test mocha -t 10000 --require ./test/helper.js ./test/integration --recursive --reporter=nyan --forbid-pending",
-    "test": "yarn unit && yarn int"
+    "unit": "HOSTNAME=http://platform.local mocha -t 3000 --require ./test/helper.js ./test/unit --recursive --reporter=nyan --forbid-pending --exit",
+    "int": "NODE_ENV=test mocha -t 10000 --require ./test/helper.js ./test/integration --recursive --reporter=nyan --forbid-pending --exit",
+    "test": "yarn int"
   },
   "lint-staged": {
     "*.js": [
