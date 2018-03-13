@@ -6,8 +6,6 @@ jobs:
     working_directory: ~/events-service
     steps:
       - checkout
-      - restore_cache:
-          key: dependency-cache-{{ checksum "yarn.lock" }}
       - run:
           name: Install Docker Compose
           command: |
@@ -15,12 +13,12 @@ jobs:
             chmod +x ~/docker-compose
             mv ~/docker-compose /usr/local/bin/docker-compose
       - restore_cache:
-          key: dependency-cache-{{ checksum "yarn.lock" }}
+          key: node-modules-cache-{{ checksum "yarn.lock" }}
       - run:
           name: Install Dependencies
           command: docker-compose run --rm --no-deps test yarn
       - save_cache:
-          key: dependency-cache-{{ checksum "yarn.lock" }}
+          key: node-modules-cache-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
       - run:
