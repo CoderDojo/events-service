@@ -9,6 +9,7 @@ jobs:
           NODE_ENV: testing
     steps:
       - checkout
+      - setup_remote_docker
       - restore_cache:
           key: dependency-cache-{{ checksum "yarn.lock" }}
       - run:
@@ -20,7 +21,7 @@ jobs:
             - node_modules
       - run:
           name: Tests
-          command: yarn test
+          command: docker-compose up test
   deploy:
     working_directory: ~/events-service
     docker:

@@ -4,6 +4,7 @@ module.exports = {
   },
   globals: {
     sinon: true,
+    expect: true,
   },
   rules: {
     'no-unused-expressions': 0,

@@ -4,9 +4,14 @@ const EventOccurrencesModel = require('./models/EventOccurrencesModel');
 
 class EventsController {
   static async list(query, builder = EventOccurrencesModel.query()) {
-    return builder.distinct(raw('ON (start_time) *'))
-      .orderBy('startTime')
-      .where(query);
+    const nextEvents = EventOccurrencesModel.query()
+      .distinct(raw('ON (id) *'))
+      .orderBy('id')
+      .where(query)
+      .as('nextEvents');
+    return builder
+      .from(nextEvents)
+      .orderBy('startTime');
   }
 }
 
