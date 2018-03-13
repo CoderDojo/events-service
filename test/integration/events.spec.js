@@ -58,6 +58,19 @@ describe('integration:events', () => {
     });
   });
 
+  it('should return active sessions and a selected fields', async () => {
+    const res = await request(app)
+      .get('/events?query[dojoId]=6dc83174-aad2-4dac-853f-69a0d738cec8&fields=id,dojoId&related=sessions')
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(200);
+    expect(res.body.results.length).to.equal(2);
+    expect(res.body.results[0]).to.have.keys(['id', 'dojoId', 'sessions']);
+    expect(res.body.results[0].sessions.length).to.equal(0);
+    expect(res.body.results[1]).to.have.keys(['id', 'dojoId', 'sessions']);
+    expect(res.body.results[1].sessions.length).to.equal(2);
+  });
+
   it('should support page and pageSize', async () => {
     const res1 = await request(app)
       .get('/events?query[dojoId]=95b351c7-8228-4a9d-8fcc-b6b8bf2dd0c2&fields=id,dojoId&page=1&pageSize=3')
