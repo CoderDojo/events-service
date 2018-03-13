@@ -23,7 +23,7 @@ jobs:
             - node_modules
       - run:
           name: Tests
-          command: docker-compose up test
+          command: docker-compose run --rm test
   deploy:
     working_directory: ~/events-service
     docker:
