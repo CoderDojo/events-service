@@ -58,7 +58,7 @@ describe('integration:events', () => {
     });
   });
 
-  it('should return active sessions and a selected fields', async () => {
+  it('should return active sessions and selected fields', async () => {
     const res = await request(app)
       .get('/events?query[dojoId]=6dc83174-aad2-4dac-853f-69a0d738cec8&fields=id,dojoId&related=sessions')
       .set('Accept', 'application/json')
@@ -69,6 +69,21 @@ describe('integration:events', () => {
     expect(res.body.results[0].sessions.length).to.equal(0);
     expect(res.body.results[1]).to.have.keys(['id', 'dojoId', 'sessions']);
     expect(res.body.results[1].sessions.length).to.equal(2);
+  });
+
+  it('should return active sessions as well as tickets', async () => {
+    const res = await request(app)
+      .get('/events?query[dojoId]=6dc83174-aad2-4dac-853f-69a0d738cec8&fields=id,dojoId&related=sessions.tickets')
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(200);
+    expect(res.body.results.length).to.equal(2);
+    expect(res.body.results[0]).to.have.keys(['id', 'dojoId', 'sessions']);
+    expect(res.body.results[0].sessions.length).to.equal(0);
+    expect(res.body.results[1]).to.have.keys(['id', 'dojoId', 'sessions']);
+    expect(res.body.results[1].sessions.length).to.equal(2);
+    expect(res.body.results[1].sessions.map(s => s.tickets).length).to.equal(2);
+    expect(res.body.results[1].sessions[0].tickets[0]).to.have.keys(['id', 'sessionId', 'name', 'type', 'quantity', 'deleted']);
   });
 
   it('should support page and pageSize', async () => {

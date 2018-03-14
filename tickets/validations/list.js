@@ -3,15 +3,16 @@ const ValidationHelper = require('../../util/ValidationHelper');
 
 module.exports = [
   checkSchema({
-    'query[eventId]': {
+    'query[sessionId]': {
       in: ['query'],
       isUUID: true,
     },
-    'query[status]': {
+    'query[type]': {
       in: ['query'],
       optional: true,
     },
-    related: {
+    'query[deleted]': {
+      in: ['query'],
       optional: true,
     },
   }),

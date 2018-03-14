@@ -1,5 +1,5 @@
 const { Model } = require('objection');
-const EventModel = require('../../events/models/EventOccurrencesModel');
+const TicketModel = require('../../tickets/models/TicketModel');
 
 class SessionModel extends Model {
   static get STATUSES() {
@@ -17,14 +17,14 @@ class SessionModel extends Model {
   static get tableName() {
     return 'cd_sessions';
   }
-  static get relationMapping() {
+  static get relationMappings() {
     return {
-      event: {
-        relation: Model.BelongsToOneRelation,
-        modelClass: EventModel,
+      tickets: {
+        relation: Model.HasManyRelation,
+        modelClass: TicketModel,
         join: {
-          from: 'cd_session.event_id',
-          to: 'v_event_occurrences.id',
+          from: 'cd_tickets.sessionId',
+          to: 'cd_sessions.id',
         },
       },
     };

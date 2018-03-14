@@ -2,6 +2,7 @@ const Knex = require('knex');
 const proxy = require('proxyquire');
 const setupEvents = require('./setupEvents');
 const setupSessions = require('./setupSessions');
+const setupTickets = require('./setupTickets');
 
 const { knexSnakeCaseMappers, Model } = require('objection');
 
@@ -35,6 +36,7 @@ before(async () => {
   });
   await setupEvents(db);
   await setupSessions(db);
+  await setupTickets(db);
 
   global.app = proxy('../../../index', {
     './setup-db': () => {

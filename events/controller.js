@@ -11,9 +11,10 @@ class EventsController {
       .as('nextEvents');
     return builder
       .from(nextEvents)
-      .allowEager('[sessions]')
+      .allowEager('sessions.tickets') // http://vincit.github.io/objection.js/#alloweager : sessions and sessions.tickets are 2 valable options
       .eager(related)
-      .modifyEager('sessions', _builder => _builder.applyFilter('active'))
+      .modifyEager('[sessions.tickets, sessions]', _builder => _builder.applyFilter('active'))
+      .modifyEager('sessions.tickets', _builder => _builder.applyFilter('publicFields'))
       .orderBy('startTime');
   }
 }
