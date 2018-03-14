@@ -3,6 +3,7 @@ const proxy = require('proxyquire');
 const setupEvents = require('./setupEvents');
 const setupSessions = require('./setupSessions');
 const setupTickets = require('./setupTickets');
+const setupApplications = require('./setupApplications');
 
 const { knexSnakeCaseMappers, Model } = require('objection');
 
@@ -37,6 +38,9 @@ before(async () => {
   await setupEvents(db);
   await setupSessions(db);
   await setupTickets(db);
+  await setupApplications(db);
+
+  // db.on('query', data => console.log(data.sql))
 
   global.app = proxy('../../../index', {
     './setup-db': () => {

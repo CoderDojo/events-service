@@ -68,6 +68,7 @@ describe('integration:events', () => {
     expect(res.body.results[0]).to.have.keys(['id', 'dojoId', 'sessions']);
     expect(res.body.results[0].sessions.length).to.equal(0);
     expect(res.body.results[1]).to.have.keys(['id', 'dojoId', 'sessions']);
+    expect(res.body.results[1].sessions[0]).to.not.have.keys(['tickets']);
     expect(res.body.results[1].sessions.length).to.equal(2);
   });
 
@@ -83,7 +84,35 @@ describe('integration:events', () => {
     expect(res.body.results[1]).to.have.keys(['id', 'dojoId', 'sessions']);
     expect(res.body.results[1].sessions.length).to.equal(2);
     expect(res.body.results[1].sessions.map(s => s.tickets).length).to.equal(2);
-    expect(res.body.results[1].sessions[0].tickets[0]).to.have.keys(['id', 'sessionId', 'name', 'type', 'quantity', 'deleted']);
+    expect(res.body.results[1].sessions[0].tickets[0]).to.have.keys(['id', 'sessionId', 'name', 'type', 'quantity', 'deleted', 'totalApplications', 'approvedApplications']);
+  });
+
+  it('should return the right number of calculated applications per ticket', async () => {
+    const res = await request(app)
+      .get('/events?query[dojoId]=6dc83174-aad2-4dac-853f-69a0d738cec8&fields=id,dojoId&related=sessions.tickets')
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(200);
+    expect((res.body.results[1].sessions
+      .find(s => s.id === 'e688e464-db01-42fa-b655-5d93fadc3ed8'))
+      .tickets.find(t => t.id === '58544293-9d1e-4ae0-b061-e005225886b2')
+      .totalApplications)
+      .to.equal(2);
+    expect((res.body.results[1].sessions
+      .find(s => s.id === 'e688e464-db01-42fa-b655-5d93fadc3ed8'))
+      .tickets.find(t => t.id === '58544293-9d1e-4ae0-b061-e005225886b2')
+      .approvedApplications)
+      .to.equal(1);
+    expect((res.body.results[1].sessions
+      .find(s => s.id === '29e7aed3-09b6-44cd-a5be-58a8d41ee61f'))
+      .tickets.find(t => t.id === 'e91533b2-94e7-459c-98fe-a4d95fdc9637')
+      .totalApplications)
+      .to.equal(1);
+    expect((res.body.results[1].sessions
+      .find(s => s.id === '29e7aed3-09b6-44cd-a5be-58a8d41ee61f'))
+      .tickets.find(t => t.id === 'e91533b2-94e7-459c-98fe-a4d95fdc9637')
+      .approvedApplications)
+      .to.equal(1);
   });
 
   it('should support page and pageSize', async () => {
