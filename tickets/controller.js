@@ -1,7 +1,7 @@
 const TicketModel = require('./models/TicketModel');
 
 class TicketsController {
-  static async list(query, builder = TicketModel.query()) {
+  static async list({ query }, builder = TicketModel.query()) {
     return builder
       .where(query);
   }

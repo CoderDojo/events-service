@@ -24,10 +24,10 @@ module.exports = async (db) => {
     id: '3ae8fc05-55b6-4ea1-ad85-4f385452f764',
     dojoId: '95b351c7-8228-4a9d-8fcc-b6b8bf2dd0c2',
     dates: [
-      { startTime: '2018-05-02T10:00:00.000Z', endTime: '2018-05-02T12:00:00.000Z' },
+      { startTime: '2018-04-25T10:00:00.000Z', endTime: '2018-04-25T12:00:00.000Z' },
     ],
   });
-    await db('cd_events').insert({
+  await db('cd_events').insert({
     id: '0e83d8e7-b991-4e4e-b3bd-36aa956f6754',
     dojoId: '95b351c7-8228-4a9d-8fcc-b6b8bf2dd0c2',
     dates: [
