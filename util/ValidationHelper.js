@@ -23,6 +23,14 @@ class ValidationHelper {
         toInt: true,
         optional: true,
       },
+      orderBy: {
+        in: ['query'],
+        optional: true,
+      },
+      direction: {
+        in: ['query'],
+        optional: true,
+      },
     });
   }
 }

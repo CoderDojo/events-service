@@ -39,6 +39,9 @@ module.exports = [
         errorMessage: 'query[utcOffset] is required when after_date or before_date are specified',
       },
     },
+    related: {
+      optional: true,
+    },
   }),
   ValidationHelper.checkPaginationSchema(),
   ValidationHelper.handleErrors,
