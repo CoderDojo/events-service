@@ -8,7 +8,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "node index.js",
+    "start": "node index.js | pino-socket -m tcp -a data.logentries.com ",
     "dev": "nodemon -x \"node --trace-warnings index.js\"",
     "lint": "eslint .",
     "precommit": "lint-staged",
@@ -47,6 +47,8 @@
     "lint-staged": "^7.0.0",
     "moment": "^2.21.0",
     "objection": "^1.0.0",
-    "pg": "^7.4.1"
+    "pg": "^7.4.1",
+    "pino": "^4.14.0",
+    "pino-socket": "^1.0.1"
   }
 }
