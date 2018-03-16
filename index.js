@@ -1,3 +1,4 @@
+const newrelic = require('newrelic');
 const express = require('express');
 const bodyParser = require('body-parser');
 const logger = require('./util/pino-stream');
