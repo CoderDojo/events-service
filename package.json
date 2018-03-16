@@ -9,7 +9,7 @@
   "private": true,
   "scripts": {
     "start": "node index.js | pino-socket -m tcp -a data.logentries.com ",
-    "dev": "nodemon -x \"node --trace-warnings index.js\"",
+    "dev": "nodemon -x \"node --trace-warnings --inspect=0.0.0.0 index.js\"",
     "lint": "eslint .",
     "precommit": "lint-staged",
     "unit": "HOSTNAME=http://platform.local mocha -t 3000 --require ./test/helper.js ./test/unit --recursive --reporter=nyan --forbid-pending --exit",
@@ -49,6 +49,7 @@
     "newrelic": "^3.2.0",
     "objection": "^1.0.0",
     "pg": "^7.4.1",
+    "pg-types": "^1.12.1",
     "pino": "^4.14.0",
     "pino-socket": "^1.0.1"
   }
