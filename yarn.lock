@@ -16,10 +16,6 @@
     esutils "^2.0.2"
     js-tokens "^3.0.0"
 
-"@newrelic/koa@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@newrelic/koa/-/koa-1.0.0.tgz#17b9d3addcdbf96ff2e1e11074a6942b23f08410"
-
 "@newrelic/native-metrics@^2.1.0":
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@newrelic/native-metrics/-/native-metrics-2.2.0.tgz#c2fe499ce7fef9e8b2a79e9da04069c7be2020b6"
@@ -2958,11 +2954,10 @@ negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
 
-newrelic@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/newrelic/-/newrelic-3.2.0.tgz#78c4a616b2cf4584fdbfb33b807fab6dd2c0b0c0"
+newrelic@^2.4.2:
+  version "2.9.1"
+  resolved "https://registry.yarnpkg.com/newrelic/-/newrelic-2.9.1.tgz#dcd65dff7735eb0869202ac03b8611c6efd3d11d"
   dependencies:
-    "@newrelic/koa" "^1.0.0"
     async "^2.1.4"
     concat-stream "^1.5.0"
     https-proxy-agent "^0.3.6"

@@ -20,6 +20,18 @@ class EventsController {
           .applyFilter('approvedApplications'))
       .orderBy('startTime');
   }
+  static async load({ query, related }) {
+    console.log(query);
+    return EventOccurrencesModel
+      .query()
+      .findOne(query)
+      .allowEager('sessions.tickets.applications') // http://vincit.github.io/objection.js/#alloweager : sessions and sessions.tickets are 2 valable options
+      .eager(related)
+      .modifyEager('[sessions.tickets, sessions]', _builder => _builder.applyFilter('active'))
+      .modifyEager('sessions.tickets', _builder =>
+        _builder.applyFilter('publicFields')
+          .applyFilter('approvedApplications'));
+  }
 }
 
 module.exports = EventsController;
