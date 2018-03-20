@@ -16,6 +16,9 @@ exports.config = {
   },
   allow_all_headers: true,
   attributes: {
+    include: [
+      'request.parameters.*',
+    ],
     exclude: [
       'request.headers.cookie',
       'request.headers.authorization',
