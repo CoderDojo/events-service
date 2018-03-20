@@ -1,4 +1,4 @@
-const newrelic = require('newrelic');
+const newrelic = require('newrelic'); // eslint-disable-line no-unused-vars
 const express = require('express');
 const bodyParser = require('body-parser');
 const logger = require('./util/pino-stream');
