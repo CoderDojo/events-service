@@ -30,5 +30,6 @@ module.exports = [
       optional: true,
     },
   }),
+  ValidationHelper.checkPaginationSchema(),
   ValidationHelper.handleErrors,
 ];
