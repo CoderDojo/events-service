@@ -3,8 +3,18 @@ const ValidationHelper = require('../../util/ValidationHelper');
 
 module.exports = [
   checkSchema({
+    'query[eventId]': {
+      in: ['query'],
+      isUUID: true,
+    },
+    'query[sessionId]': {
+      in: ['query'],
+      optional: true,
+      isUUID: true,
+    },
     'query[ticketId]': {
       in: ['query'],
+      optional: true,
       isUUID: true,
     },
     'query[status]': {
@@ -15,6 +25,11 @@ module.exports = [
       in: ['query'],
       optional: true,
     },
+    'query[name]': {
+      in: ['query'],
+      optional: true,
+    },
   }),
+  ValidationHelper.checkPaginationSchema(),
   ValidationHelper.handleErrors,
 ];

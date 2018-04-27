@@ -20,6 +20,16 @@ class EventsController {
           .applyFilter('approvedApplications'))
       .orderBy('startTime');
   }
+  static async load({ query, related }, builder = EventOccurrencesModel.query()) {
+    return builder
+      .findOne(query)
+      .allowEager('sessions.tickets') // Lazy's man solution: avoid applications here as it contains private data
+      .eager(related)
+      .modifyEager('[sessions.tickets, sessions]', _builder => _builder.applyFilter('active'))
+      .modifyEager('sessions.tickets', _builder =>
+        _builder.applyFilter('publicFields')
+          .applyFilter('approvedApplications'));
+  }
 }
 
 module.exports = EventsController;
