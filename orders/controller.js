@@ -5,7 +5,19 @@ class OrdersController {
     return builder
       .allowEager('[applications]')
       .eager('applications')
+      .modifyEager('applications', _builder =>
+        _builder.applyFilter('awaiting'))
       .where(query);
+  }
+  static async create({ eventId, userId, applications }) {
+    return OrderModel
+      .query()
+      .insertGraph({
+        eventId,
+        userId,
+        applications,
+      })
+      .returning('*');
   }
 }
 

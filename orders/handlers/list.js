@@ -12,13 +12,6 @@ module.exports = [
     }
     next();
   },
-  async (req, res, next) => {
-    const user = await OrdersController.list({ query: { user_id: req.query.query.userId } });
-    if (!user) {
-      return res.status(200).send();
-    }
-    next();
-  },
   async (req, res) => {
     res.send(await OrdersController.list(req.query, res.locals.qb));
   },
