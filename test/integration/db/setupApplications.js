@@ -19,6 +19,7 @@ module.exports = async (db) => {
     dojo_id: '6dc83174-aad2-4dac-853f-69a0d738cec',
     ticket_id: '58544293-9d1e-4ae0-b061-e005225886b2',
     notes: '',
+    order_id: '642860e5-7f5f-4171-90ce-cc501856b882',
   });
   await db('cd_applications').insert({
     id: '7af9e496-0acd-4f5f-bcfd-2de650ddd48b',
@@ -36,6 +37,7 @@ module.exports = async (db) => {
     dojo_id: '6dc83174-aad2-4dac-853f-69a0d738cec',
     ticket_id: '58544293-9d1e-4ae0-b061-e005225886b2',
     notes: '',
+    order_id: '642860e5-7f5f-4171-90ce-cc501856b882',
   });
   await db('cd_applications').insert({
     id: 'e5993df8-8b3b-4f78-a9e7-77bf12470b98',
@@ -53,6 +55,7 @@ module.exports = async (db) => {
     dojo_id: '6dc83174-aad2-4dac-853f-69a0d738cec',
     ticket_id: '58544293-9d1e-4ae0-b061-e005225886b2',
     notes: '',
+    order_id: '642860e5-7f5f-4171-90ce-cc501856b882',
   });
   await db('cd_applications').insert({
     id: '99943208-7561-4c90-8701-fcc63f49ea5d',

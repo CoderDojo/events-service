@@ -18,7 +18,8 @@ CREATE TABLE cd_events (
     notify_on_applicant boolean DEFAULT false,
     eventbrite_id character varying,
     eventbrite_url character varying,
-    use_dojo_address boolean
+    use_dojo_address boolean,
+    CONSTRAINT pk_cd_events_id PRIMARY KEY (id)
 );
 
 CREATE VIEW v_event_occurrences AS (
