@@ -35,7 +35,7 @@ describe('integration:orders', () => {
     expect(res.body.total).to.equal(0);
   });
 
-  it('should return ', async () => {
+  it('should return all componenets of an order with values that correspond to the body of the request', async () => {
     const res = await request(app)
       .post('/orders')
       .send({
@@ -88,5 +88,16 @@ describe('integration:orders', () => {
     expect(res.body.applications[1].ticketId).to.equal('58544293-9d1e-4ae0-b061-e005225886b2');
     expect(res.body.applications[0].orderId).exist;
     expect(res.body.applications[1].orderId).exist;
+  });
+  it('should return 400 if userId and/or applications and/or eventId is/are not valid', async () => {
+    await request(app)
+      .post('/orders')
+      .send({
+        userId: '1234',
+        applications: [],
+        eventId: '1234',
+      })
+      .set('Accept', 'application/json')
+      .expect(400);
   });
 });

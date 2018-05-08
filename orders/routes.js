@@ -15,6 +15,6 @@ const handlers = {
 
 const router = express.Router();
 router.get('/', validations.list, handlers.list);
-router.post('/', handlers.create);
+router.post('/', validations.create, handlers.create);
 
 module.exports = router;
