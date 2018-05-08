@@ -35,7 +35,7 @@ describe('integration:orders', () => {
     expect(res.body.total).to.equal(0);
   });
 
-  it('should return all componenets of an order with values that correspond to the body of the request', async () => {
+  it('should return all components of an order with values that correspond to the body of the request', async () => {
     const res = await request(app)
       .post('/orders')
       .send({
@@ -50,7 +50,7 @@ describe('integration:orders', () => {
           ticketName: 'Scratch',
           ticketType: 'ninja',
           sessionId: 'e688e464-db01-42fa-b655-5d93fadc3ed8',
-          dojoId: '6dc83174-aad2-4dac-853f-69a0d738cec',
+          dojoId: 'bbaf1cf2-328a-43bb-9e20-8c9c25dbbefc',
           ticketId: '58544293-9d1e-4ae0-b061-e005225886b2',
         },
         {
@@ -63,7 +63,7 @@ describe('integration:orders', () => {
           ticketName: 'Scratch',
           ticketType: 'ninja',
           sessionId: 'e688e464-db01-42fa-b655-5d93fadc3ed8',
-          dojoId: '6dc83174-aad2-4dac-853f-69a0d738cec',
+          dojoId: 'bbaf1cf2-328a-43bb-9e20-8c9c25dbbefc',
           ticketId: '58544293-9d1e-4ae0-b061-e005225886b2',
         }],
         eventId: 'a60dc59d-2db2-4d5d-a6d3-c08473dee5d4',
@@ -96,6 +96,29 @@ describe('integration:orders', () => {
         userId: '1234',
         applications: [],
         eventId: '1234',
+      })
+      .set('Accept', 'application/json')
+      .expect(400);
+  });
+  it('should return 400 if any item in an application object is not valid', async () => {
+    await request(app)
+      .post('/orders')
+      .send({
+        userId: 'eb384c15-4032-4e0a-84a1-931382f6fac6',
+        applications: [{
+          id: '1234556',
+          eventId: '123455',
+          name: 'Scooby doo',
+          dateOfBirth: '2017-10-01',
+          status: 'blahblah',
+          userId: '24235235',
+          ticketName: 'Scratch',
+          ticketType: 'ninja',
+          sessionId: '345345',
+          dojoId: '345345',
+          ticketId: '345345',
+        }],
+        eventId: 'a60dc59d-2db2-4d5d-a6d3-c08473dee5d4',
       })
       .set('Accept', 'application/json')
       .expect(400);
