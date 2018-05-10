@@ -2,7 +2,6 @@ const { check } = require('express-validator/check');
 
 function checkApplications(applications) {
   return [
-    check(`${applications}id`, 'Invalid format').isUUID(),
     check(`${applications}eventId`, 'Invalid format').isUUID(),
     check(`${applications}name`, 'Invalid').exists(),
     check(`${applications}dateOfBirth`, 'Invalid').exists(),
