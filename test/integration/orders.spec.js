@@ -19,14 +19,14 @@ describe('integration:orders', () => {
     expect(res.body.results[0].applications.map(a => a.id)).to.not.include('e5993df8-8b3b-4f78-a9e7-77bf12470b98');
   });
 
-  it('should return a 404 error if the event does not exist', async () => {
+  it('should return a 404 status error if the event does not exist', async () => {
     await request(app)
       .get('/orders?query[eventId]=5f82f00c-7b47-4ae9-b78b-fc30f471c02f&query[userId]=575fefc6-e9c2-44c8-8e2a-0e1933e6b42e')
       .set('Accept', 'application/json')
       .expect(404);
   });
 
-  it('should return 200 OK if the user does not exist', async () => {
+  it('should return 200 OK status if the user does not exist', async () => {
     const res = await request(app)
       .get('/orders?query[eventId]=a60dc59d-2db2-4d5d-a6d3-c08473dee5d4&query[userId]=a683b89c-8e90-475d-b6a6-38d2597d4445')
       .set('Accept', 'application/json')
@@ -35,13 +35,12 @@ describe('integration:orders', () => {
     expect(res.body.total).to.equal(0);
   });
 
-  it('should return all components of an order with values that correspond to the body of the request', async () => {
+  it('should return all components of an order with values that correspond to the body of the request with a 200 OK status', async () => {
     const res = await request(app)
       .post('/orders')
       .send({
         userId: 'eb384c15-4032-4e0a-84a1-931382f6fac6',
         applications: [{
-          id: '9c56d4ac-7dbc-4b71-897c-15fcb14639d1',
           eventId: 'a60dc59d-2db2-4d5d-a6d3-c08473dee5d4',
           name: 'Scooby doo',
           dateOfBirth: '2017-10-01',
@@ -54,7 +53,6 @@ describe('integration:orders', () => {
           ticketId: '58544293-9d1e-4ae0-b061-e005225886b2',
         },
         {
-          id: '0b9f163e-1705-4bd7-bfbc-a643662b3346',
           eventId: 'a60dc59d-2db2-4d5d-a6d3-c08473dee5d4',
           name: 'Scrappy doo',
           dateOfBirth: '2017-10-01',
@@ -82,31 +80,72 @@ describe('integration:orders', () => {
       'status', 'userId', 'ticketName',
       'ticketType', 'sessionId', 'dojoId',
       'ticketId', 'orderId']);
-    expect(res.body.applications[0].id).to.equal('9c56d4ac-7dbc-4b71-897c-15fcb14639d1');
-    expect(res.body.applications[1].id).to.equal('0b9f163e-1705-4bd7-bfbc-a643662b3346');
     expect(res.body.applications[0].ticketId).to.equal('58544293-9d1e-4ae0-b061-e005225886b2');
     expect(res.body.applications[1].ticketId).to.equal('58544293-9d1e-4ae0-b061-e005225886b2');
     expect(res.body.applications[0].orderId).exist;
     expect(res.body.applications[1].orderId).exist;
   });
-  it('should return 400 if userId and/or applications and/or eventId is/are not valid', async () => {
+  it('should return a status of 400 if userId is not valid', async () => {
     await request(app)
       .post('/orders')
       .send({
         userId: '1234',
-        applications: [],
-        eventId: '1234',
+        applications: [{
+          eventId: 'a60dc59d-2db2-4d5d-a6d3-c08473dee5d4',
+          name: 'Scooby doo',
+          dateOfBirth: '2017-10-01',
+          status: 'blahblah',
+          userId: 'a60dc59d-2db2-4d5d-a6d3-c08473dee5d4',
+          ticketName: 'Scratch',
+          ticketType: 'ninja',
+          sessionId: 'a60dc59d-2db2-4d5d-a6d3-c08473dee5d4',
+          dojoId: 'a60dc59d-2db2-4d5d-a6d3-c08473dee5d4',
+          ticketId: 'a60dc59d-2db2-4d5d-a6d3-c08473dee5d4',
+        }],
+        eventId: 'a60dc59d-2db2-4d5d-a6d3-c08473dee5d4',
       })
       .set('Accept', 'application/json')
       .expect(400);
   });
-  it('should return 400 if any item in an application object is not valid', async () => {
+  it('should return a status of 400 if applications is not valid', async () => {
+    await request(app)
+      .post('/orders')
+      .send({
+        userId: 'eb384c15-4032-4e0a-84a1-931382f6fac6',
+        applications: [],
+        eventId: 'a60dc59d-2db2-4d5d-a6d3-c08473dee5d4',
+      })
+      .set('Accept', 'application/json')
+      .expect(400);
+  });
+  it('should return a status of 400 if eventId is not valid', async () => {
     await request(app)
       .post('/orders')
       .send({
         userId: 'eb384c15-4032-4e0a-84a1-931382f6fac6',
         applications: [{
-          id: '1234556',
+          eventId: 'a60dc59d-2db2-4d5d-a6d3-c08473dee5d4',
+          name: 'Scooby doo',
+          dateOfBirth: '2017-10-01',
+          status: 'blahblah',
+          userId: 'a60dc59d-2db2-4d5d-a6d3-c08473dee5d4',
+          ticketName: 'Scratch',
+          ticketType: 'ninja',
+          sessionId: 'a60dc59d-2db2-4d5d-a6d3-c08473dee5d4',
+          dojoId: 'a60dc59d-2db2-4d5d-a6d3-c08473dee5d4',
+          ticketId: 'a60dc59d-2db2-4d5d-a6d3-c08473dee5d4',
+        }],
+        eventId: '1234',
+      })
+      .set('Accept', 'application/json')
+      .expect(400);
+  });
+  it('should return a status of 400 if any item in the applications object is not valid', async () => {
+    await request(app)
+      .post('/orders')
+      .send({
+        userId: 'eb384c15-4032-4e0a-84a1-931382f6fac6',
+        applications: [{
           eventId: '123455',
           name: 'Scooby doo',
           dateOfBirth: '2017-10-01',
