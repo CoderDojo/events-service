@@ -5,7 +5,6 @@ function checkApplications(applications) {
     check(`${applications}eventId`, 'Invalid format').isUUID(),
     check(`${applications}name`, 'Invalid').exists(),
     check(`${applications}dateOfBirth`, 'Invalid').exists(),
-    check(`${applications}status`, 'Invalid').exists(),
     check(`${applications}userId`, 'Invalid format').isUUID(),
     check(`${applications}ticketName`, 'Invalid').exists(),
     check(`${applications}ticketType`, 'Invalid').exists(),
