@@ -32,8 +32,10 @@ class ApplicationModel extends Model {
         .whereNot(...this.preConditions.cancelled),
     };
   }
-  $beforeInsert() {
+  $beforeInsert(queryContext) {
     this.id = uuid();
+    this.status = queryContext.event.ticketApproval ? ApplicationModel.STATUSES.PENDING :
+      ApplicationModel.STATUSES.APPROVED;
   }
   static get tableName() {
     return 'cd_applications';

@@ -9,6 +9,7 @@ module.exports = async (db) => {
     dates: [
       { startTime: '2018-02-28T18:00:00.000Z', endTime: '2018-02-28T19:30:00.000Z' },
     ],
+    ticketApproval: false,
   });
   await db('cd_events').insert({
     id: 'a5d60790-17c4-4a86-a023-d1558b06f118',

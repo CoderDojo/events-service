@@ -6,6 +6,7 @@ class OrderModel extends Model {
   static get tableName() {
     return 'cd_orders';
   }
+
   $beforeInsert() {
     this.id = uuid();
     this.createdAt = new Date().toISOString();

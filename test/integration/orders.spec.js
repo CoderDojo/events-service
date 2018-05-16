@@ -84,6 +84,8 @@ describe('integration:orders', () => {
     expect(res.body.applications[1].ticketId).to.equal('58544293-9d1e-4ae0-b061-e005225886b2');
     expect(res.body.applications[0].orderId).exist;
     expect(res.body.applications[1].orderId).exist;
+    expect(res.body.applications[0].status).to.equal('approved');
+    expect(res.body.applications[1].status).to.equal('approved');
   });
   it('should return a status of 400 if userId is not valid', async () => {
     await request(app)

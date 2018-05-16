@@ -9,9 +9,10 @@ class OrdersController {
         _builder.applyFilter('awaiting'))
       .where(query);
   }
-  static async create({ eventId, userId, applications }) {
+  static async create({ eventId, userId, applications }, event) {
     return OrderModel
       .query()
+      .context({ event })
       .insertGraph({
         eventId,
         userId,
