@@ -13,5 +13,7 @@ CREATE TABLE cd_applications (
     attendance character varying,
     dojo_id character varying,
     ticket_id character varying,
-    notes character varying
+    notes character varying,
+    order_id uuid,
+    CONSTRAINT pk_cd_applications_id PRIMARY KEY (id)
 );

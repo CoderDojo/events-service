@@ -1,4 +1,5 @@
 const { Model } = require('objection');
+const uuid = require('uuid/v4');
 
 class ApplicationModel extends Model {
   static get STATUSES() {
@@ -30,6 +31,11 @@ class ApplicationModel extends Model {
       awaiting: builder => builder.applyFilter('active')
         .whereNot(...this.preConditions.cancelled),
     };
+  }
+  $beforeInsert(queryContext) {
+    this.id = uuid();
+    this.status = queryContext.event.ticketApproval ? ApplicationModel.STATUSES.PENDING :
+      ApplicationModel.STATUSES.APPROVED;
   }
   static get tableName() {
     return 'cd_applications';
