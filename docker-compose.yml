@@ -16,6 +16,8 @@ services:
       - db
     volumes:
       - .:/usr/src/app:Z
+    ports:
+      - "9239:9229"
   watch_test:
     <<: *test-base
     command: ./node_modules/.bin/nodemon --exec yarn test

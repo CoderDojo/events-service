@@ -5,6 +5,12 @@ class ApplicationsController {
     return builder
       .where(query);
   }
+  static async checkin(application) {
+    application.attendance.push(new Date());
+    return ApplicationModel
+      .patch({ attendance: application.attendance })
+      .where({ id: application.id });
+  }
 }
 
 module.exports = ApplicationsController;

@@ -15,7 +15,7 @@ module.exports = async (db) => {
     session_id: 'e688e464-db01-42fa-b655-5d93fadc3ed8',
     created: new Date(),
     deleted: 0,
-    attendance: [],
+    attendance: [new Date()],
     dojo_id: '6dc83174-aad2-4dac-853f-69a0d738cec',
     ticket_id: '58544293-9d1e-4ae0-b061-e005225886b2',
     notes: '',

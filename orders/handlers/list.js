@@ -13,6 +13,7 @@ module.exports = [
     next();
   },
   async (req, res) => {
-    res.send(await OrdersController.list(req.query, res.locals.qb));
+    const orders = await OrdersController.list(req.query, res.locals.qb);
+    res.send(orders);
   },
 ];
