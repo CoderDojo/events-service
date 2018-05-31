@@ -1,12 +1,11 @@
 const { checkSchema } = require('express-validator/check');
-const eventHelper = require('./helper');
 const ValidationHelper = require('../../util/ValidationHelper');
+const eventHelper = require('./helper');
 
 module.exports = [
   checkSchema({
-    'query[dojoId]': {
-      in: ['query'],
-      isUUID: true,
+    eventId: {
+      in: ['params'],
     },
     'query[afterDate]': eventHelper['query[afterDate]'],
     'query[beforeDate]': eventHelper['query[beforeDate]'],
@@ -15,6 +14,5 @@ module.exports = [
       optional: true,
     },
   }),
-  ValidationHelper.checkPaginationSchema(),
   ValidationHelper.handleErrors,
 ];
