@@ -4,6 +4,24 @@ module.exports = async (db) => {
   const sqlFile = fs.readFileSync(`${__dirname}/applications.sql`, 'utf8');
   await db.raw(sqlFile);
   await db('cd_applications').insert({
+    id: 'e8a87127-d315-46cd-b0b9-8d925440b815',
+    eventId: 'a60dc59d-2db2-4d5d-a6d3-c08473dee5d4',
+    name: 'Daphne',
+    date_of_birth: '2017-10-01',
+    status: 'cancelled',
+    user_id: '575fefc6-e9c2-44c8-8e2a-0e1933e6b42e',
+    ticket_name: 'Scratch',
+    ticket_type: 'ninja',
+    session_id: 'e688e464-db01-42fa-b655-5d93fadc3ed8',
+    created: new Date(),
+    deleted: 0,
+    attendance: [],
+    dojo_id: '6dc83174-aad2-4dac-853f-69a0d738cec',
+    ticket_id: '58544293-9d1e-4ae0-b061-e005225886b2',
+    notes: '',
+    order_id: '642860e5-7f5f-4171-90ce-cc501856b882',
+  });
+  await db('cd_applications').insert({
     id: '7cc4f1ba-4cfa-47cd-b769-d5bfafc5d582',
     eventId: 'a60dc59d-2db2-4d5d-a6d3-c08473dee5d4',
     name: 'Scooby doo',

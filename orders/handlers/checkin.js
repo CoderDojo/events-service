@@ -10,14 +10,19 @@ module.exports = [
       query: {
         id: req.params.orderId,
       },
-      related: 'applications',
     }))[0];
     next();
   },
   async (req, res) => {
-    const applications = res.locals.order.applications;
-    const checkedApplications = await Promise.all(applications.map(appli => ApplicationController.checkin(appli)));
-    res.locals.order.applications = checkedApplications;
+    const order = res.locals.order;
+    if (order) {
+      const checkedApplications = await ApplicationController.checkin({
+        query: {
+          orderId: order.id,
+        },
+      });
+      res.locals.order.applications = checkedApplications;
+    }
     res.send(res.locals.order);
   },
 ];

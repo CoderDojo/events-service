@@ -10,7 +10,7 @@ CREATE TABLE cd_applications (
     session_id character varying,
     created character varying,
     deleted boolean,
-    attendance character varying,
+    attendance timestamp with time zone[],
     dojo_id character varying,
     ticket_id character varying,
     notes character varying,

@@ -40,9 +40,6 @@ class ApplicationModel extends Model {
   static get tableName() {
     return 'cd_applications';
   }
-/*  static get jsonAttributes() {
-    return ['attendance'];
-  } */
 }
 
 module.exports = ApplicationModel;
