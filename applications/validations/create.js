@@ -9,6 +9,7 @@ function checkApplications(applications) {
     check(`${applications}ticketName`, 'Invalid').exists(),
     check(`${applications}ticketType`, 'Invalid').exists(),
     check(`${applications}sessionId`, 'Invalid format').isUUID(),
+    check(`${applications}specialRequirement`).optional(),
     check(`${applications}dojoId`, 'Invalid format').isUUID(),
     check(`${applications}ticketId`, 'Invalid format').isUUID(),
   ];
