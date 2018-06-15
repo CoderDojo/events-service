@@ -75,11 +75,11 @@ describe('integration:orders', () => {
     expect(res.body.applications[0]).to.have.all.keys(['id', 'eventId', 'name', 'dateOfBirth',
       'status', 'userId', 'ticketName',
       'ticketType', 'sessionId', 'dojoId',
-      'ticketId', 'orderId']);
+      'ticketId', 'orderId', 'created', 'deleted']);
     expect(res.body.applications[1]).to.have.keys(['id', 'eventId', 'name', 'dateOfBirth',
       'status', 'userId', 'ticketName',
       'ticketType', 'sessionId', 'dojoId',
-      'ticketId', 'orderId']);
+      'ticketId', 'orderId', 'created', 'deleted']);
     expect(res.body.applications[0].ticketId).to.equal('58544293-9d1e-4ae0-b061-e005225886b2');
     expect(res.body.applications[1].ticketId).to.equal('58544293-9d1e-4ae0-b061-e005225886b2');
     expect(res.body.applications[0].orderId).exist;

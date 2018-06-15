@@ -5,6 +5,11 @@ class ApplicationsController {
     return builder
       .where(query);
   }
+  static async delete({ query }, builder = ApplicationModel.query()) {
+    return builder
+      .update({ deleted: true })
+      .where(query);
+  }
 }
 
 module.exports = ApplicationsController;
