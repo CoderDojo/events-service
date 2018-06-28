@@ -11,10 +11,12 @@ class EventOccurrencesModel extends Model {
       where(query) {
         if (query.afterDate) {
           super.where('endTime', '>=', query.afterDate);
+          super.orderBy('endTime');
           delete query.afterDate;
         }
         if (query.beforeDate) {
           super.where('startTime', '<=', query.beforeDate);
+          super.orderBy('startTime');
           delete query.beforeDate;
         }
         delete query.utcOffset;
