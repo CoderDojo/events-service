@@ -17,16 +17,17 @@ app.use(bodyParser.json());
 
 process.on('unhandledRejection', err => logger.error(err));
 process.on('uncaughtException', logger.error);
-app.use((err, req, res, next) => {
-  logger.error(err);
-  next();
-});
 
 app.use('/events', events);
 app.use('/sessions', sessions);
 app.use('/tickets', tickets);
 app.use('/orders', orders);
 app.get('/ping', (req, res) => res.send(204));
+
+app.use((err, req, res, next) => {
+  logger.error(err);
+  next();
+});
 
 app.listen(3000, () => logger.info('event-service listening on port 3000'));
 
