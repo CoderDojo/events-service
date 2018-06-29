@@ -1,6 +1,9 @@
 const OrderModel = require('./models/OrderModel');
 
 class OrdersController {
+  constructor(trx) {
+    this.builder = OrderModel.query(trx);
+  }
   static async load(query, builder = OrderModel.query()) {
     return builder
       .allowEager('[applications]')
@@ -17,9 +20,8 @@ class OrdersController {
         _builder.applyFilter('awaiting'))
       .where(query);
   }
-  static async create({ eventId, userId, applications }, event) {
-    return OrderModel
-      .query()
+  static async create({ eventId, userId, applications }, event, builder = OrderModel.query()) {
+    return builder
       .context({ event })
       .insertGraph({
         eventId,
@@ -28,9 +30,8 @@ class OrdersController {
       })
       .returning('*');
   }
-  static async update(orderId, event, { applications }) {
-    return OrderModel
-      .query()
+  static async update(orderId, event, { applications }, builder = OrderModel.query()) {
+    return builder
       .context({ event })
       .upsertGraph({
         id: orderId,
@@ -39,6 +40,9 @@ class OrdersController {
         noDelete: ['applications'],
         noUnrelate: ['applications'],
       });
+  }
+  async update(orderId, event, { applications }) {
+    return this.constructor.update(orderId, event, { applications }, this.builder);
   }
 }
 

@@ -1,5 +1,7 @@
+const { transaction, Model } = require('objection');
 const OrdersController = require('../controller');
 const EventsController = require('../../events/controller');
+const TicketsController = require('../../tickets/controller');
 const ApplicationsController = require('../../applications/controller');
 
 module.exports = [
@@ -11,9 +13,8 @@ module.exports = [
     next();
   },
   async (req, res, next) => {
-    // TODO change list to load
-    res.locals.event = await EventsController.list({ query: { id: res.locals.order.eventId } });
-    if (!res.locals.event.length) {
+    res.locals.event = await EventsController.load({ query: { id: res.locals.order.eventId }, related: 'sessions.tickets' });
+    if (!res.locals.event) {
       return res.status(404).send();
     }
     next();
@@ -21,14 +22,35 @@ module.exports = [
   // Possible replacement: soft-delete plugin + upsertGraph
   // But plugin seems unfinished https://github.com/griffinpp/objection-soft-delete
   async (req, res, next) => {
-    await ApplicationsController.delete({ query: { orderId: req.params.orderId } });
-    next();
+    let trx;
+    const { applications } = req.body;
+    const { event } = res.locals;
+    try {
+      trx = await transaction.start(Model.knex());
+      await (new ApplicationsController(trx)).delete({ query: { orderId: req.params.orderId } });
+      const quantitiesByTicketId = applications.reduce((acc, appl) => {
+        acc[appl.ticketId] = acc[appl.ticketId] ? acc[appl.ticketId] : 0;
+        acc[appl.ticketId] += 1;
+        return acc;
+      }, {});
+      const applTicketIds = Object.keys(quantitiesByTicketId);
+      const tickets = event.tickets.filter(t => applTicketIds.indexOf(t.id) > -1);
+      // We need to be in the same transaction to see the modification
+      const ticketCtrl = new TicketsController(trx);
+      tickets.every(async (t) => {
+        // We reload the tickets as totalApplications can be wrong post-deletion
+        const a = await ticketCtrl.load({ query: { id: t.id }, filters: 'totalApplications' });
+        a.hasCapacityFor(quantitiesByTicketId[t.id]);
+      });
+      // We don't use upsertGraphAndFetch as it doesn't apply the filters for related
+      await (new OrdersController(trx)).update(req.params.orderId, event, req.body);
+      await trx.commit();
+      return next();
+    } catch (e) {
+      await trx.rollback();
+      return next(e);
+    }
   },
-  async (req, res, next) => {
-    await OrdersController.update(req.params.orderId, res.locals.event[0], req.body);
-    next();
-  },
-  // We don't use upsertGraphAndFetch as it doesn't apply the filters for related
   async (req, res) => {
     res.send(await OrdersController.load({ id: req.params.orderId }));
   },

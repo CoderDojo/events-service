@@ -35,6 +35,9 @@ class EventOccurrencesModel extends Model {
       },
     };
   }
+  get tickets() {
+    return this.sessions.reduce((acc, s) => acc.concat(s.tickets), []);
+  }
 }
 
 module.exports = EventOccurrencesModel;
