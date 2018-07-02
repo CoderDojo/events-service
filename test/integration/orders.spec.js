@@ -164,4 +164,26 @@ describe('integration:orders', () => {
       .set('Accept', 'application/json')
       .expect(400);
   });
+  it('should return a status of 409 if there is no space to book', async () => {
+    await request(app)
+      .post('/orders')
+      .send({
+        userId: 'eb384c15-4032-4e0a-84a1-931382f6fac6',
+        applications: [{
+          eventId: 'a60dc59d-2db2-4d5d-a6d3-c08473dee5d4',
+          name: 'Cloack',
+          dateOfBirth: '2017-10-01',
+          status: 'approved',
+          userId: '575fefc6-e9c2-44c8-8e2a-0e1933e6b42e',
+          ticketName: 'Scratch',
+          ticketType: 'ninja',
+          sessionId: 'e688e464-db01-42fa-b655-5d93fadc3ed8',
+          dojoId: 'bbaf1cf2-328a-43bb-9e20-8c9c25dbbefc',
+          ticketId: '6a2d89b1-b154-41b6-9eb4-c8cf55080c5e',
+        }],
+        eventId: 'a60dc59d-2db2-4d5d-a6d3-c08473dee5d4',
+      })
+      .set('Accept', 'application/json')
+      .expect(409);
+  });
 });
