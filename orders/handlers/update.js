@@ -1,5 +1,6 @@
 const { transaction, Model } = require('objection');
 const OrdersController = require('../controller');
+const utils = require('../utils');
 const EventsController = require('../../events/controller');
 const TicketsController = require('../../tickets/controller');
 const ApplicationsController = require('../../applications/controller');
@@ -28,20 +29,17 @@ module.exports = [
     try {
       trx = await transaction.start(Model.knex());
       await (new ApplicationsController(trx)).delete({ query: { orderId: req.params.orderId } });
-      const quantitiesByTicketId = applications.reduce((acc, appl) => {
-        acc[appl.ticketId] = acc[appl.ticketId] ? acc[appl.ticketId] : 0;
-        acc[appl.ticketId] += 1;
-        return acc;
-      }, {});
+      const quantitiesByTicketId = utils.quantityByTicket(applications);
       const applTicketIds = Object.keys(quantitiesByTicketId);
+
       const tickets = event.tickets.filter(t => applTicketIds.indexOf(t.id) > -1);
       // We need to be in the same transaction to see the modification
       const ticketCtrl = new TicketsController(trx);
-      tickets.every(async (t) => {
+      await Promise.all(tickets.map(async (t) => {
         // We reload the tickets as totalApplications can be wrong post-deletion
         const a = await ticketCtrl.load({ query: { id: t.id }, filters: 'totalApplications' });
-        a.hasCapacityFor(quantitiesByTicketId[t.id]);
-      });
+        return a.hasCapacityFor(quantitiesByTicketId[t.id]);
+      }));
       // We don't use upsertGraphAndFetch as it doesn't apply the filters for related
       await (new OrdersController(trx)).update(req.params.orderId, event, req.body);
       await trx.commit();

@@ -10,6 +10,7 @@ class TicketsController {
   }
   static async load({ query, related, filters }, builder = TicketModel.query()) {
     return builder
+      .applyFilter('publicFields')
       .applyFilter(filters)
       .eager(related)
       .findOne(query);

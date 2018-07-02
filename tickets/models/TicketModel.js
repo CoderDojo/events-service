@@ -40,7 +40,7 @@ class TicketModel extends Model {
   }
 
   hasCapacityFor(qty) {
-    if (this.totalApplications + qty < this.quantity) {
+    if (this.totalApplications + qty <= this.quantity) {
       return true;
     }
     throw notEnoughCapacityError;
