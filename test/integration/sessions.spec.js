@@ -74,6 +74,14 @@ describe('integration:sessions', () => {
         deleted: 0,
         invites: [],
       }, {
+        id: '6a2d89b1-b154-41b6-9eb4-c8cf55080c5e',
+        sessionId: 'e688e464-db01-42fa-b655-5d93fadc3ed8',
+        name: 'For nobody',
+        type: 'mentor',
+        quantity: 0,
+        deleted: 0,
+        invites: [],
+      }, {
         id: '58544293-9d1e-4ae0-b061-e005225886b2',
         sessionId: 'e688e464-db01-42fa-b655-5d93fadc3ed8',
         name: 'Scratch',

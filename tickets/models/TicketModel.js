@@ -1,4 +1,5 @@
 const { Model } = require('objection');
+const { notEnoughCapacityError } = require('../errors');
 const ApplicationModel = require('../../applications/models/ApplicationModel');
 
 class TicketModel extends Model {
@@ -36,6 +37,13 @@ class TicketModel extends Model {
         },
       },
     };
+  }
+
+  hasCapacityFor(qty) {
+    if (this.totalApplications + qty <= this.quantity) {
+      return true;
+    }
+    throw notEnoughCapacityError;
   }
 }
 

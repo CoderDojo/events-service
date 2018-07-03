@@ -13,6 +13,15 @@ module.exports = async (db) => {
     invites: [],
   });
   await db('cd_tickets').insert({
+    id: '6a2d89b1-b154-41b6-9eb4-c8cf55080c5e',
+    session_id: 'e688e464-db01-42fa-b655-5d93fadc3ed8',
+    name: 'For nobody',
+    type: 'mentor',
+    quantity: 0,
+    deleted: 0,
+    invites: [],
+  });
+  await db('cd_tickets').insert({
     id: '58544293-9d1e-4ae0-b061-e005225886b2',
     session_id: 'e688e464-db01-42fa-b655-5d93fadc3ed8',
     name: 'Scratch',

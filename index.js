@@ -26,7 +26,10 @@ app.get('/ping', (req, res) => res.send(204));
 
 app.use((err, req, res, next) => {
   logger.error(err);
-  next();
+  if (err.status && err.message) {
+    return res.status(err.status).send(err.message);
+  }
+  return next();
 });
 
 app.listen(3000, () => logger.info('event-service listening on port 3000'));
