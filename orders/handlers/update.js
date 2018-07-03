@@ -1,10 +1,9 @@
 const { transaction, Model } = require('objection');
-const OrdersController = require('../controller');
 const utils = require('../utils');
+const OrdersController = require('../controller');
 const EventsController = require('../../events/controller');
 const TicketsController = require('../../tickets/controller');
 const ApplicationsController = require('../../applications/controller');
-const utils = require('../utils');
 
 module.exports = [
   async (req, res, next) => {
