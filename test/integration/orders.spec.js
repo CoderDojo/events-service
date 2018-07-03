@@ -88,8 +88,6 @@ describe('integration:orders', () => {
     expect(res.body.applications[0].ticketType).to.equal('ninja');
     expect(res.body.applications[1].ticketType).to.equal('ninja');
     expect(res.body.applications[0].orderId).exist;
-    expect(res.body.applications[0].orderId).exist;
-    expect(res.body.applications[0].orderId).exist;
     expect(res.body.applications[1].orderId).exist;
     expect(res.body.applications[0].status).to.equal('approved');
     expect(res.body.applications[1].status).to.equal('approved');
