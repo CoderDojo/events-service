@@ -11,7 +11,7 @@ describe('orders/utils', () => {
         { id: 't3', name: 'ticket3', type: 'mentor' },
       ],
     };
-    test('should enforce ticketName, ticketType, dojoId and eventId', () => {
+    it('should enforce ticketName, ticketType, dojoId and eventId', () => {
       const applications = [{
         name: 'batman',
         dob: '2018-01-01',
@@ -20,13 +20,13 @@ describe('orders/utils', () => {
         ticketType: 'superhero',
       }];
       const formatted = formatApplications(event, applications);
-      expect(formatted.length).toEqual(1);
-      expect(formatted[0].ticketName).toEqual('ticket1');
-      expect(formatted[0].ticketType).toEqual('mentor');
-      expect(formatted[0].dojoId).toEqual('dojo1');
-      expect(formatted[0].eventId).toEqual('event1');
+      expect(formatted.length).to.eql(1);
+      expect(formatted[0].ticketName).to.eql('ticket1');
+      expect(formatted[0].ticketType).to.eql('mentor');
+      expect(formatted[0].dojoId).to.eql('dojo1');
+      expect(formatted[0].eventId).to.eql('event1');
     });
-    test('should throw an error', () => {
+    it('should throw an error', () => {
       const applications = [{
         name: 'batman',
         dob: '2018-01-01',
@@ -34,15 +34,15 @@ describe('orders/utils', () => {
         ticketName: 'tickettack',
         ticketType: 'superhero',
       }];
-      expect(() => formatApplications(event, applications)).toThrow('Invalid ticket sent');
+      expect(() => formatApplications(event, applications)).to.throw('Invalid ticket sent');
     });
-    test('should return an empty array if by any chance, there is no applications', () => {
+    it('should return an empty array if by any chance, there is no applications', () => {
       const applications = [];
-      expect(formatApplications(event, applications)).toEqual([]);
+      expect(formatApplications(event, applications)).to.eql([]);
     });
   });
   describe('quantityByTicket', () => {
-    test('should return the number of application by ticketId', () => {
+    it('should return the number of application by ticketId', () => {
       const applications = [{
         name: 'batman',
         dob: '2018-01-01',
@@ -59,7 +59,7 @@ describe('orders/utils', () => {
       const expected = {
         fakeTicket: 2,
       };
-      expect(quantityByTicket(applications)).toEqual(expected);
+      expect(quantityByTicket(applications)).to.eql(expected);
     });
   });
 });
