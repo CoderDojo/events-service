@@ -35,7 +35,7 @@ describe('integration:orders', () => {
     expect(res.body.total).to.equal(0);
   });
 
-  it('should return all components of an order with values that correspond to the body of the request with a 200 OK status', async () => {
+  it('should return all components of an order with values that correspond to the ticket definition with a 200 OK status', async () => {
     const res = await request(app)
       .post('/orders')
       .send({
@@ -46,8 +46,8 @@ describe('integration:orders', () => {
           dateOfBirth: '2017-10-01',
           status: 'approved',
           userId: '575fefc6-e9c2-44c8-8e2a-0e1933e6b42e',
-          ticketName: 'Scratch',
-          ticketType: 'ninja',
+          ticketName: 'IM BATMAN',
+          ticketType: 'banana',
           sessionId: 'e688e464-db01-42fa-b655-5d93fadc3ed8',
           dojoId: 'bbaf1cf2-328a-43bb-9e20-8c9c25dbbefc',
           ticketId: '58544293-9d1e-4ae0-b061-e005225886b2',
@@ -58,8 +58,8 @@ describe('integration:orders', () => {
           dateOfBirth: '2017-10-01',
           status: 'pending',
           userId: '575fefc6-e9c2-44c8-8e2a-0e1933e6b42e',
-          ticketName: 'Scratch',
-          ticketType: 'ninja',
+          ticketName: 'IM BATMAN',
+          ticketType: 'banana',
           sessionId: 'e688e464-db01-42fa-b655-5d93fadc3ed8',
           dojoId: 'bbaf1cf2-328a-43bb-9e20-8c9c25dbbefc',
           ticketId: '58544293-9d1e-4ae0-b061-e005225886b2',
@@ -82,6 +82,11 @@ describe('integration:orders', () => {
       'ticketId', 'orderId', 'created', 'deleted']);
     expect(res.body.applications[0].ticketId).to.equal('58544293-9d1e-4ae0-b061-e005225886b2');
     expect(res.body.applications[1].ticketId).to.equal('58544293-9d1e-4ae0-b061-e005225886b2');
+    // it should use the ticket definition
+    expect(res.body.applications[0].ticketName).to.equal('Scratch');
+    expect(res.body.applications[1].ticketName).to.equal('Scratch');
+    expect(res.body.applications[0].ticketType).to.equal('ninja');
+    expect(res.body.applications[1].ticketType).to.equal('ninja');
     expect(res.body.applications[0].orderId).exist;
     expect(res.body.applications[1].orderId).exist;
     expect(res.body.applications[0].status).to.equal('approved');

@@ -5,10 +5,17 @@ const TicketsController = require('../../tickets/controller');
 
 module.exports = [
   async (req, res, next) => {
+    // Possible optimisation : load only the related tickets rather than all of the event's tickets
     res.locals.event = await EventsController.load({ query: { id: req.body.eventId }, related: 'sessions.tickets' });
     if (!res.locals.event) {
       return res.status(404).send();
     }
+    next();
+  },
+  (req, res, next) => {
+    const { event } = res.locals;
+    const { applications } = req.body;
+    req.body.applications = utils.formatApplications(event, applications);
     next();
   },
   async (req, res, next) => {

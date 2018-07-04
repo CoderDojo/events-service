@@ -7,7 +7,7 @@ describe('integration:orders->update', () => {
     app = global.app;
   });
 
-  it('should replace an order\'s applications', async () => {
+  it('should replace an order\'s applications based on ticketId', async () => {
     const res = await request(app)
       .put('/orders/642860e5-7f5f-4171-90ce-cc501856b882')
       .send({
@@ -17,8 +17,8 @@ describe('integration:orders->update', () => {
           dateOfBirth: '2017-10-01',
           status: 'approved',
           userId: '575fefc6-e9c2-44c8-8e2a-0e1933e6b42e',
-          ticketName: 'Scratch',
-          ticketType: 'ninja',
+          ticketName: 'IM BATMAN',
+          ticketType: 'banana',
           sessionId: 'e688e464-db01-42fa-b655-5d93fadc3ed8',
           dojoId: 'bbaf1cf2-328a-43bb-9e20-8c9c25dbbefc',
           ticketId: '58544293-9d1e-4ae0-b061-e005225886b2',
@@ -29,8 +29,8 @@ describe('integration:orders->update', () => {
           dateOfBirth: '2017-10-01',
           status: 'pending',
           userId: '575fefc6-e9c2-44c8-8e2a-0e1933e6b42e',
-          ticketName: 'Scratch',
-          ticketType: 'ninja',
+          ticketName: 'IM BATMAN',
+          ticketType: 'batman',
           sessionId: 'e688e464-db01-42fa-b655-5d93fadc3ed8',
           dojoId: 'bbaf1cf2-328a-43bb-9e20-8c9c25dbbefc',
           ticketId: '58544293-9d1e-4ae0-b061-e005225886b2',
@@ -59,6 +59,11 @@ describe('integration:orders->update', () => {
     expect(res.body.applications[1].name).to.equal('Dagger');
     expect(res.body.applications[0].status).to.equal('approved');
     expect(res.body.applications[1].status).to.equal('approved');
+    // It should use the ticket definition
+    expect(res.body.applications[0].ticketName).to.equal('Scratch');
+    expect(res.body.applications[1].ticketName).to.equal('Scratch');
+    expect(res.body.applications[0].ticketType).to.equal('ninja');
+    expect(res.body.applications[1].ticketType).to.equal('ninja');
   });
   it('should return a status of 400 if applications is not valid', async () => {
     await request(app)

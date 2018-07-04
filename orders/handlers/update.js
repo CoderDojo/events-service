@@ -1,6 +1,6 @@
 const { transaction, Model } = require('objection');
-const OrdersController = require('../controller');
 const utils = require('../utils');
+const OrdersController = require('../controller');
 const EventsController = require('../../events/controller');
 const TicketsController = require('../../tickets/controller');
 const ApplicationsController = require('../../applications/controller');
@@ -18,6 +18,12 @@ module.exports = [
     if (!res.locals.event) {
       return res.status(404).send();
     }
+    next();
+  },
+  (req, res, next) => {
+    const { event } = res.locals;
+    const { applications } = req.body;
+    req.body.applications = utils.formatApplications(event, applications);
     next();
   },
   // Possible replacement: soft-delete plugin + upsertGraph
