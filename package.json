@@ -14,7 +14,7 @@
     "precommit": "lint-staged",
     "unit": "jest test/unit/**/*.js --reporters jest-nyan-reporter",
     "int": "NODE_ENV=test mocha -t 10000 --require ./test/helper.js ./test/integration --recursive --reporter=nyan --forbid-pending --full-trace --exit",
-    "test": "yarn int"
+    "test": "concurrently \"yarn int\" \"yarn unit\""
   },
   "lint-staged": {
     "*.js": [
@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "chai": "^4.1.2",
+    "concurrently": "^3.6.0",
     "eslint": "^4.18.2",
     "eslint-config-coderdojo": "^1.1.0",
     "eslint-plugin-chai-friendly": "^0.4.1",
