@@ -40,8 +40,8 @@ module.exports = [
 
       const tickets = event.tickets.filter(t => applTicketIds.indexOf(t.id) > -1);
       // We need to be in the same transaction to see the modification
-      const ticketCtrl = new TicketsController(trx);
       await Promise.all(tickets.map(async (t) => {
+        const ticketCtrl = new TicketsController(trx);
         // We reload the tickets as totalApplications can be wrong post-deletion
         const a = await ticketCtrl.load({ query: { id: t.id }, filters: 'totalApplications' });
         return a.hasCapacityFor(quantitiesByTicketId[t.id]);
