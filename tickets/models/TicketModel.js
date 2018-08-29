@@ -40,7 +40,9 @@ class TicketModel extends Model {
   }
 
   hasCapacityFor(qty) {
-    if (this.totalApplications + qty <= this.quantity) {
+    // We're getting rid of parent tickets in the future, and there should be enough parent tickets
+    // to cover all ninjas going anyway, so we're just going to let parent tickets be overbooked
+    if (this.type === TicketModel.TYPES.PARENT || this.totalApplications + qty <= this.quantity) {
       return true;
     }
     throw notEnoughCapacityError;
