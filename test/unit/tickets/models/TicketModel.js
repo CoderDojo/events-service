@@ -11,6 +11,13 @@ describe('TicketModel', () => {
       am.totalApplications = 1;
       expect(am.hasCapacityFor(2)).to.be.true;
     });
+    it('should return true if the ticket is a parent ticket, even if overbooked', () => {
+      const am = new TicketModel();
+      am.quantity = 1;
+      am.totalApplications = 2;
+      am.type = 'parent-guardian';
+      expect(am.hasCapacityFor(1)).to.be.true;
+    });
     it('should throw an error on overflow', () => {
       const am = new TicketModel();
       am.quantity = 3;
