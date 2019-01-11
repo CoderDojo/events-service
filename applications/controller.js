@@ -8,11 +8,30 @@ class ApplicationsController {
     return builder
       .where(query);
   }
+  // Used for handling diff in Orders
   static async delete({ query }, builder = ApplicationModel.query()) {
     return builder
       .update({ deleted: true })
       .where(query);
   }
+  // Used to soft-delete an account's application
+  // NOTE: no default builder = it should have its own context set beforehands
+  static async softDelete(builder) {
+    return builder
+      .update({
+        name: '',
+        dob: new Date(),
+        notes: '',
+        deleted: true,
+      });
+  }
+  // Used to hard-delete a duplicate account
+  // NOTE: no default builder = it should have its own context set beforehands
+  static async delete(builder) {
+    return builder
+      .delete();
+  }
+
   async list({ query }) {
     return this.constructor.list({ query }, this.builder);
   }

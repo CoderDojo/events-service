@@ -6,6 +6,7 @@ const events = require('./events/routes');
 const sessions = require('./sessions/routes');
 const tickets = require('./tickets/routes');
 const orders = require('./orders/routes');
+const applications = require('./applications/routes');
 const setupDb = require('./setup-db');
 
 setupDb();
@@ -22,6 +23,7 @@ app.use('/events', events);
 app.use('/sessions', sessions);
 app.use('/tickets', tickets);
 app.use('/orders', orders);
+app.use('/applications', applications);
 app.get('/ping', (req, res) => res.send(204));
 
 app.use((err, req, res, next) => {

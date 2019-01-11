@@ -5,6 +5,10 @@ const collectionHandler = require('../../util/collectionHandler');
 module.exports = [
   collectionHandler(Model),
   async (req, res) => {
-    res.send(await ApplicationsController.list(req.query, res.locals.qb));
+    const applications = await ApplicationsController.list(req.query, res.locals.qb);
+    if (!applications.results.length) {
+      return res.sendStatus(404);
+    }
+    return res.send(applications);
   },
 ];
