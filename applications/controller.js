@@ -6,7 +6,8 @@ class ApplicationsController {
   }
   static async list({ query }, builder = ApplicationModel.query()) {
     return builder
-      .where(query);
+      .where(query)
+      .applyFilter('active');
   }
   // Used for handling diff in Orders
   static async delete({ query }, builder = ApplicationModel.query()) {
@@ -20,14 +21,14 @@ class ApplicationsController {
     return builder
       .update({
         name: '',
-        dob: new Date(),
+        dateOfBirth: new Date(),
         notes: '',
         deleted: true,
       });
   }
   // Used to hard-delete a duplicate account
   // NOTE: no default builder = it should have its own context set beforehands
-  static async delete(builder) {
+  static async hardDelete(builder) {
     return builder
       .delete();
   }

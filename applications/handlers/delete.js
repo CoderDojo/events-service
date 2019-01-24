@@ -5,8 +5,8 @@ const modelHandler = require('../../util/builderHandler');
 module.exports = [
   modelHandler(Model),
   async (req, res) => {
-    const removeApplication = ApplicationsController.delete;
-    if (req.body.soft) ApplicationsController.softDelete;
+    let removeApplication = ApplicationsController.hardDelete;
+    if (req.body.soft) removeApplication = ApplicationsController.softDelete;
     const deleted = await removeApplication(res.locals.qb);
     if (deleted) {
       return res.sendStatus(200);
