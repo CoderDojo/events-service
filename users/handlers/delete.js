@@ -1,13 +1,12 @@
-const ApplicationsController = require('../controller');
-const Model = require('../models/ApplicationModel');
-const modelHandler = require('../../util/builderHandler');
+const ApplicationsController = require('../../applications/controller');
+const Model = require('../../applications/models/ApplicationModel');
 
 module.exports = [
-  modelHandler(Model),
   async (req, res) => {
+    const qB = Model.query().where({ userId: req.params.id });
     let removeApplication = ApplicationsController.hardDelete;
     if (req.body.soft) removeApplication = ApplicationsController.softDelete;
-    const deleted = await removeApplication(res.locals.qb);
+    const deleted = await removeApplication(qB);
     if (deleted) {
       return res.sendStatus(204);
     }
