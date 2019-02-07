@@ -3,7 +3,6 @@ const validations = require('./validations');
 const handlers = require('./handlers');
 
 const router = express.Router();
-router.get('/', validations.list, handlers.list);
-router.delete('/:id', validations.delete, handlers.delete);
+router.delete('/:id/applications', validations.applications.delete, handlers.applications.delete);
 
 module.exports = router;
