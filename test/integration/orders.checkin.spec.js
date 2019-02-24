@@ -9,7 +9,7 @@ describe('integration:orders->checkin', () => {
 
   it('should add current date to the application', async () => {
     const res = await request(app)
-      .patch('/orders/3a9413a5-0399-42c2-b0c1-e2d384600e87/checkin')
+      .patch('/orders/3a9413a5-0399-42c2-b0c1-e2d384600e87/attendances')
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect(200);
@@ -21,7 +21,7 @@ describe('integration:orders->checkin', () => {
   });
   it('should append dates if checked-in multiple times to support recurring events', async () => {
     const res = await request(app)
-      .patch('/orders/a57baaf8-cf99-4470-b078-b7e822d22288/checkin')
+      .patch('/orders/a57baaf8-cf99-4470-b078-b7e822d22288/attendances')
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect(200);
@@ -33,7 +33,7 @@ describe('integration:orders->checkin', () => {
   });
   it('should not touch the cancelled/deleted applications', async () => {
     const res = await request(app)
-      .patch('/orders/642860e5-7f5f-4171-90ce-cc501856b882/checkin')
+      .patch('/orders/642860e5-7f5f-4171-90ce-cc501856b882/attendances')
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect(200);
@@ -47,7 +47,7 @@ describe('integration:orders->checkin', () => {
   });
   it('should return 404 if the order doesnt exists', async () => {
     await request(app)
-      .patch('/orders/e4a65856-8cc2-41f6-8ca5-ed1bfbceb82e/checkin')
+      .patch('/orders/e4a65856-8cc2-41f6-8ca5-ed1bfbceb82e/attendances')
       .set('Accept', 'application/json')
       .expect(404);
   });

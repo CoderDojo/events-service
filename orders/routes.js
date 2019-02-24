@@ -24,7 +24,7 @@ const handlers = {
 const router = express.Router();
 router.get('/', validations.list, handlers.list);
 router.post('/', validations.create, handlers.create);
-router.patch('/:orderId/checkin', validations.checkin, handlers.checkin);
+router.patch('/:orderId/attendances', validations.checkin, handlers.checkin);
 router.put('/:orderId', validations.update, handlers.update);
 
 module.exports = router;
