@@ -35,7 +35,7 @@ describe('integration:orders', () => {
     expect(res.body.total).to.equal(0);
   });
 
-  it('should return all components of an order with values that correspond to the body of the request with a 200 OK status', async () => {
+  it('should return all components of an order with values that correspond to the ticket definition with a 200 OK status', async () => {
     const res = await request(app)
       .post('/orders')
       .send({
@@ -46,8 +46,8 @@ describe('integration:orders', () => {
           dateOfBirth: '2017-10-01',
           status: 'approved',
           userId: '575fefc6-e9c2-44c8-8e2a-0e1933e6b42e',
-          ticketName: 'Scratch',
-          ticketType: 'ninja',
+          ticketName: 'IM BATMAN',
+          ticketType: 'banana',
           sessionId: 'e688e464-db01-42fa-b655-5d93fadc3ed8',
           dojoId: 'bbaf1cf2-328a-43bb-9e20-8c9c25dbbefc',
           ticketId: '58544293-9d1e-4ae0-b061-e005225886b2',
@@ -58,8 +58,8 @@ describe('integration:orders', () => {
           dateOfBirth: '2017-10-01',
           status: 'pending',
           userId: '575fefc6-e9c2-44c8-8e2a-0e1933e6b42e',
-          ticketName: 'Scratch',
-          ticketType: 'ninja',
+          ticketName: 'IM BATMAN',
+          ticketType: 'banana',
           sessionId: 'e688e464-db01-42fa-b655-5d93fadc3ed8',
           dojoId: 'bbaf1cf2-328a-43bb-9e20-8c9c25dbbefc',
           ticketId: '58544293-9d1e-4ae0-b061-e005225886b2',
@@ -75,13 +75,18 @@ describe('integration:orders', () => {
     expect(res.body.applications[0]).to.have.all.keys(['id', 'eventId', 'name', 'dateOfBirth',
       'status', 'userId', 'ticketName',
       'ticketType', 'sessionId', 'dojoId',
-      'ticketId', 'orderId']);
+      'ticketId', 'orderId', 'created', 'deleted']);
     expect(res.body.applications[1]).to.have.keys(['id', 'eventId', 'name', 'dateOfBirth',
       'status', 'userId', 'ticketName',
       'ticketType', 'sessionId', 'dojoId',
-      'ticketId', 'orderId']);
+      'ticketId', 'orderId', 'created', 'deleted']);
     expect(res.body.applications[0].ticketId).to.equal('58544293-9d1e-4ae0-b061-e005225886b2');
     expect(res.body.applications[1].ticketId).to.equal('58544293-9d1e-4ae0-b061-e005225886b2');
+    // it should use the ticket definition
+    expect(res.body.applications[0].ticketName).to.equal('Scratch');
+    expect(res.body.applications[1].ticketName).to.equal('Scratch');
+    expect(res.body.applications[0].ticketType).to.equal('ninja');
+    expect(res.body.applications[1].ticketType).to.equal('ninja');
     expect(res.body.applications[0].orderId).exist;
     expect(res.body.applications[1].orderId).exist;
     expect(res.body.applications[0].status).to.equal('approved');
@@ -163,5 +168,27 @@ describe('integration:orders', () => {
       })
       .set('Accept', 'application/json')
       .expect(400);
+  });
+  it('should return a status of 409 if there is no space to book', async () => {
+    await request(app)
+      .post('/orders')
+      .send({
+        userId: 'eb384c15-4032-4e0a-84a1-931382f6fac6',
+        applications: [{
+          eventId: 'a60dc59d-2db2-4d5d-a6d3-c08473dee5d4',
+          name: 'Cloack',
+          dateOfBirth: '2017-10-01',
+          status: 'approved',
+          userId: '575fefc6-e9c2-44c8-8e2a-0e1933e6b42e',
+          ticketName: 'Scratch',
+          ticketType: 'ninja',
+          sessionId: 'e688e464-db01-42fa-b655-5d93fadc3ed8',
+          dojoId: 'bbaf1cf2-328a-43bb-9e20-8c9c25dbbefc',
+          ticketId: '6a2d89b1-b154-41b6-9eb4-c8cf55080c5e',
+        }],
+        eventId: 'a60dc59d-2db2-4d5d-a6d3-c08473dee5d4',
+      })
+      .set('Accept', 'application/json')
+      .expect(409);
   });
 });

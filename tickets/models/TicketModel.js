@@ -1,4 +1,5 @@
 const { Model } = require('objection');
+const { notEnoughCapacityError } = require('../errors');
 const ApplicationModel = require('../../applications/models/ApplicationModel');
 
 class TicketModel extends Model {
@@ -36,6 +37,15 @@ class TicketModel extends Model {
         },
       },
     };
+  }
+
+  hasCapacityFor(qty) {
+    // We're getting rid of parent tickets in the future, and there should be enough parent tickets
+    // to cover all ninjas going anyway, so we're just going to let parent tickets be overbooked
+    if (this.type === TicketModel.TYPES.PARENT || this.totalApplications + qty <= this.quantity) {
+      return true;
+    }
+    throw notEnoughCapacityError;
   }
 }
 

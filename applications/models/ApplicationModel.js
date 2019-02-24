@@ -36,6 +36,8 @@ class ApplicationModel extends Model {
     this.id = uuid();
     this.status = queryContext.event.ticketApproval ? ApplicationModel.STATUSES.PENDING :
       ApplicationModel.STATUSES.APPROVED;
+    this.created = new Date();
+    this.deleted = this.deleted === undefined ? false : this.deleted;
   }
   static get tableName() {
     return 'cd_applications';

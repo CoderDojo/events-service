@@ -18,6 +18,7 @@ class EventOccurrencesModel extends Model {
           delete query.beforeDate;
         }
         delete query.utcOffset;
+        super.orderBy('startTime');
         return super.where(query);
       }
     };
@@ -33,6 +34,9 @@ class EventOccurrencesModel extends Model {
         },
       },
     };
+  }
+  get tickets() {
+    return this.sessions.reduce((acc, s) => acc.concat(s.tickets), []);
   }
 }
 

@@ -52,10 +52,10 @@ before(async () => {
 after(() => {
   const deletePromises = [];
   createdDbs.forEach((db) => {
-    deletePromises.push(async () => {
+    deletePromises.push((async () => {
       await db.db.destroy();
       await knex.raw(`DROP DATABASE ${db.name}`);
-    });
+    })());
   });
   return Promise.all(deletePromises);
 });

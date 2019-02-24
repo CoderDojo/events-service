@@ -12,18 +12,19 @@
     "dev": "nodemon -x \"node --trace-warnings --inspect=0.0.0.0 index.js\"",
     "lint": "eslint .",
     "precommit": "lint-staged",
-    "unit": "HOSTNAME=http://platform.local mocha -t 3000 --require ./test/helper.js ./test/unit --recursive --reporter=nyan --forbid-pending --exit",
+    "unit": "NODE_ENV=test mocha -t 10000 --require ./test/helper.js ./test/unit --recursive --reporter=nyan --forbid-pending --full-trace --exit",
     "int": "NODE_ENV=test mocha -t 10000 --require ./test/helper.js ./test/integration --recursive --reporter=nyan --forbid-pending --full-trace --exit",
-    "test": "yarn int"
+    "test": "concurrently \"yarn int\" \"yarn unit\""
   },
   "lint-staged": {
     "*.js": [
-      "eslint --fix --ext .js,.vue",
+      "eslint --fix --ext .js",
       "git add"
     ]
   },
   "devDependencies": {
     "chai": "^4.1.2",
+    "concurrently": "^3.6.0",
     "eslint": "^4.18.2",
     "eslint-config-coderdojo": "^1.1.0",
     "eslint-plugin-chai-friendly": "^0.4.1",
