@@ -7,11 +7,9 @@ const { orderNotFound } = require('../errors');
 module.exports = [
   collectionHandler(Model),
   async (req, res, next) => {
-    res.locals.order = (await OrdersController.list({
-      query: {
-        id: req.params.orderId,
-      },
-    }))[0];
+    res.locals.order = await OrdersController.load({
+      id: req.params.orderId,
+    });
     if (!res.locals.order) return next(orderNotFound);
     next();
   },
