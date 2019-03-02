@@ -6,6 +6,7 @@ module.exports = async (db) => {
   await db('cd_events').insert({
     id: 'a60dc59d-2db2-4d5d-a6d3-c08473dee5d4',
     dojoId: '6dc83174-aad2-4dac-853f-69a0d738cec8',
+    name: 'Test event 1',
     dates: [
       { startTime: '2018-02-28T18:00:00.000Z', endTime: '2018-02-28T19:30:00.000Z' },
     ],
