@@ -13,5 +13,5 @@ module.exports = [
     );
     next();
   },
-  eventFormatter,
+  eventFormatter.format,
 ];
