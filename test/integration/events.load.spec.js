@@ -63,7 +63,7 @@ describe('integration:events:load', () => {
         .set('Accept', 'text/calendar')
         .expect('Content-Type', /text\/calendar/)
         .expect(200);
-      const attributes = res.text.split('\r\n');
+      const attributes = res.text.replace(/\r\n\t/g, '').split('\r\n');
       expect(attributes[0]).to.equal('BEGIN:VCALENDAR');
       expect(attributes[1]).to.equal('VERSION:2.0');
       expect(attributes[2]).to.equal('CALSCALE:GREGORIAN');
@@ -76,7 +76,7 @@ describe('integration:events:load', () => {
       expect(attributes[9]).to.match(/DTSTAMP:[0-9]+T[0-9]+Z/);
       expect(attributes[10]).to.match(/DTSTART:[0-9]+T[0-9]+Z/);
       expect(attributes[11]).to.match(/DTEND:[0-9]+T[0-9]+Z/);
-      expect(attributes[12]).to.equal('URL:https://zen.coderdojo.com/events/a60dc59d-2db2-4d5d-a6d3-c08473dee5d4');
+      expect(attributes[12]).to.equal('URL:https://zen.coderdojo.com/api/3.0/events/a60dc59d-2db2-4d5d-a6d3-c08473dee5d4.ics');
       expect(attributes[13]).to.equal('ORGANIZER;CN=CoderDojo:mailto:info@coderdojo.com');
       expect(attributes[14]).to.equal('END:VEVENT');
       expect(attributes[15]).to.equal('END:VCALENDAR');

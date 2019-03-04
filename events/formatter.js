@@ -16,7 +16,7 @@ function toICS(result) {
     organizer: { name: 'CoderDojo', email: 'info@coderdojo.com' },
     start: [
       e.startTime.getUTCFullYear(),
-      e.startTime.getUTCMonth(),
+      e.startTime.getUTCMonth() + 1,
       e.startTime.getUTCDate(),
       e.startTime.getUTCHours(),
       e.startTime.getUTCMinutes(),
@@ -24,7 +24,7 @@ function toICS(result) {
     ],
     end: [
       e.endTime.getUTCFullYear(),
-      e.endTime.getUTCMonth(),
+      e.endTime.getUTCMonth() + 1,
       e.endTime.getUTCDate(),
       e.endTime.getUTCHours(),
       e.endTime.getUTCMinutes(),
@@ -32,7 +32,7 @@ function toICS(result) {
     ],
     // TODO: Add applications if they are loaded
     // TODO: Add status of the even depending on the applications
-    url: `https://zen.coderdojo.com/events/${e.id}`,
+    url: `${process.env.ICS_EVENT_URL}${e.id}.ics`,
   }));
   return ics.createEvents(icsEvents).value;
 }

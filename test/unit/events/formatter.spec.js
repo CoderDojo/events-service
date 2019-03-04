@@ -26,7 +26,7 @@ describe('EventFormatter', () => {
       const res = formatter.toICS(result);
       expect(res).to.have.keys(['productId', 'method', 'uid', 'timestamp', 'start', 'organizer', 'end', 'url']);
       expect(res.uid).to.equal(1);
-      expect(res.url).to.equal('https://zen.coderdojo.com/events/1');
+      expect(res.url).to.equal('https://zen.coderdojo.com/api/3.0/events/1.ics');
     });
   });
 });

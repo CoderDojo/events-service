@@ -14,6 +14,8 @@ services:
     working_dir: /usr/src/app
     depends_on:
       - db
+    environment:
+      - ICS_EVENT_URL=https://zen.coderdojo.com/api/3.0/events/
     volumes:
       - .:/usr/src/app:Z
   watch_test:
