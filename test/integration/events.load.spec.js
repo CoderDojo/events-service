@@ -64,22 +64,26 @@ describe('integration:events:load', () => {
         .expect('Content-Type', /text\/calendar/)
         .expect(200);
       const attributes = res.text.replace(/\r\n\t/g, '').split('\r\n');
+      let attrIt = 1;
       expect(attributes[0]).to.equal('BEGIN:VCALENDAR');
-      expect(attributes[1]).to.equal('VERSION:2.0');
-      expect(attributes[2]).to.equal('CALSCALE:GREGORIAN');
-      expect(attributes[3]).to.equal('PRODID:adamgibbons/ics');
-      expect(attributes[4]).to.equal('METHOD:PUBLISH');
-      expect(attributes[5]).to.equal('X-PUBLISHED-TTL:PT1H');
-      expect(attributes[6]).to.equal('BEGIN:VEVENT');
-      expect(attributes[7]).to.equal('UID:a60dc59d-2db2-4d5d-a6d3-c08473dee5d4');
-      expect(attributes[8]).to.equal('SUMMARY:Test event 1');
-      expect(attributes[9]).to.match(/DTSTAMP:[0-9]+T[0-9]+Z/);
-      expect(attributes[10]).to.match(/DTSTART:[0-9]+T[0-9]+Z/);
-      expect(attributes[11]).to.match(/DTEND:[0-9]+T[0-9]+Z/);
-      expect(attributes[12]).to.equal('URL:https://zen.coderdojo.com/api/3.0/events/a60dc59d-2db2-4d5d-a6d3-c08473dee5d4.ics');
-      expect(attributes[13]).to.equal('ORGANIZER;CN=CoderDojo:mailto:info@coderdojo.com');
-      expect(attributes[14]).to.equal('END:VEVENT');
-      expect(attributes[15]).to.equal('END:VCALENDAR');
+      /* eslint-disable no-plusplus */
+      expect(attributes[attrIt++]).to.equal('VERSION:2.0');
+      expect(attributes[attrIt++]).to.equal('CALSCALE:GREGORIAN');
+      expect(attributes[attrIt++]).to.equal('PRODID:coderdojo/zen');
+      expect(attributes[attrIt++]).to.equal('METHOD:PUBLISH');
+      expect(attributes[attrIt++]).to.equal('X-PUBLISHED-TTL:PT1H');
+      expect(attributes[attrIt++]).to.equal('BEGIN:VEVENT');
+      expect(attributes[attrIt++]).to.equal('UID:a60dc59d-2db2-4d5d-a6d3-c08473dee5d4@coderdojo.com');
+      expect(attributes[attrIt++]).to.equal('SUMMARY:Test event 1');
+      expect(attributes[attrIt++]).to.match(/DTSTAMP:[0-9]+T[0-9]+/);
+      expect(attributes[attrIt++]).to.match(/DTSTART:[0-9]+T[0-9]+/);
+      expect(attributes[attrIt++]).to.match(/DTEND:[0-9]+T[0-9]+/);
+      expect(attributes[attrIt++]).to.match(/DESCRIPTION:https:\/\/zen\.coderdojo\.com\/events\/a60dc59d-2db2-4d5d-a6d3-c08473dee5d4\\n null/);
+      expect(attributes[attrIt++]).to.equal('URL:https://zen.coderdojo.com/api/3.0/events/a60dc59d-2db2-4d5d-a6d3-c08473dee5d4.ics');
+      expect(attributes[attrIt++]).to.equal('ORGANIZER;CN=CoderDojo:mailto:info@coderdojo.com');
+      expect(attributes[attrIt++]).to.equal('END:VEVENT');
+      expect(attributes[attrIt++]).to.equal('END:VCALENDAR');
+      /* eslint-enable no-plusplus */
     });
   });
 });

@@ -16,6 +16,7 @@ services:
       - db
     environment:
       - ICS_EVENT_URL=https://zen.coderdojo.com/api/3.0/events/
+      - EVENT_URL=https://zen.coderdojo.com/events/
     volumes:
       - .:/usr/src/app:Z
   watch_test:

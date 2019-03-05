@@ -8,32 +8,43 @@ function toICS(result) {
   } else {
     events = [result];
   }
-  const icsEvents = events.map(e => ({
-    title: e.name,
-    description: e.description,
-    uid: e.id,
-    lastModified: e.updatedAt,
-    organizer: { name: 'CoderDojo', email: 'info@coderdojo.com' },
-    start: [
-      e.startTime.getUTCFullYear(),
-      e.startTime.getUTCMonth() + 1,
-      e.startTime.getUTCDate(),
-      e.startTime.getUTCHours(),
-      e.startTime.getUTCMinutes(),
-      e.startTime.getUTCSeconds(),
-    ],
-    end: [
-      e.endTime.getUTCFullYear(),
-      e.endTime.getUTCMonth() + 1,
-      e.endTime.getUTCDate(),
-      e.endTime.getUTCHours(),
-      e.endTime.getUTCMinutes(),
-      e.endTime.getUTCSeconds(),
-    ],
-    // TODO: Add applications if they are loaded
-    // TODO: Add status of the even depending on the applications
-    url: `${process.env.ICS_EVENT_URL}${e.id}.ics`,
-  }));
+  const icsEvents = events.map((e) => {
+    const eventUrl = e.eventbriteId ? e.eventbriteUrl : `${process.env.EVENT_URL}${e.id}`;
+    const icsed = {
+      title: e.name,
+      description: `${eventUrl}\n ${e.description}`,
+      uid: `${e.id}@coderdojo.com`,
+      lastModified: e.updatedAt,
+      location: e.address,
+      productId: 'coderdojo/zen',
+      organizer: { name: 'CoderDojo', email: 'info@coderdojo.com' },
+      startType: 'local',
+      start: [
+        e.startTime.getUTCFullYear(),
+        e.startTime.getUTCMonth() + 1,
+        e.startTime.getUTCDate(),
+        e.startTime.getUTCHours(),
+        e.startTime.getUTCMinutes(),
+        e.startTime.getUTCSeconds(),
+      ],
+      end: [
+        e.endTime.getUTCFullYear(),
+        e.endTime.getUTCMonth() + 1,
+        e.endTime.getUTCDate(),
+        e.endTime.getUTCHours(),
+        e.endTime.getUTCMinutes(),
+        e.endTime.getUTCSeconds(),
+      ],
+      // TODO: Add applications if they are loaded
+      // TODO: Add status of the even depending on the applications
+      url: `${process.env.ICS_EVENT_URL}${e.id}.ics`,
+    };
+    if (e.position && e.position.lat && e.position.lon) {
+      const { lat, lon } = e.position;
+      icsed.geo = { lat, lon };
+    }
+    return icsed;
+  });
   return ics.createEvents(icsEvents).value;
 }
 module.exports.format = function format(req, res) {

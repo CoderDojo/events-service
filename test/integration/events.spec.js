@@ -180,9 +180,10 @@ describe('integration:events', () => {
         'BEGIN:VEVENT',
         'UID:',
         'SUMMARY:',
-        /DTSTAMP:[0-9]+T[0-9]+Z/,
-        /DTSTART:[0-9]+T[0-9]+Z/,
-        /DTEND:[0-9]+T[0-9]+Z/,
+        /DTSTAMP:[0-9]+T[0-9]+/,
+        /DTSTART:[0-9]+T[0-9]+/,
+        /DTEND:[0-9]+T[0-9]+/,
+        /DESCRIPTION:https:\/\/zen\.coderdojo\.com\/events\/.+/,
         'URL:',
         'ORGANIZER;CN=CoderDojo:mailto:info@coderdojo.com',
         'END:VEVENT',
@@ -203,15 +204,15 @@ describe('integration:events', () => {
       expect(attributes[0]).to.equal('BEGIN:VCALENDAR');
       expect(attributes[1]).to.equal('VERSION:2.0');
       expect(attributes[2]).to.equal('CALSCALE:GREGORIAN');
-      expect(attributes[3]).to.equal('PRODID:adamgibbons/ics');
+      expect(attributes[3]).to.equal('PRODID:coderdojo/zen');
       expect(attributes[4]).to.equal('METHOD:PUBLISH');
       expect(attributes[5]).to.equal('X-PUBLISHED-TTL:PT1H');
-      testICSEvent([null, '3ae8fc05-55b6-4ea1-ad85-4f385452f764', 'Test event 3', null, null, null, 'https://zen.coderdojo.com/api/3.0/events/3ae8fc05-55b6-4ea1-ad85-4f385452f764.ics', null]);
-      testICSEvent([null, '0e83d8e7-b991-4e4e-b3bd-36aa956f6754', 'Test event 4', null, null, null, 'https://zen.coderdojo.com/api/3.0/events/0e83d8e7-b991-4e4e-b3bd-36aa956f6754.ics', null]);
-      testICSEvent([null, '84c0310e-49ff-4607-99da-a5abb9fb5641', 'Test event 5', null, null, null, 'https://zen.coderdojo.com/api/3.0/events/84c0310e-49ff-4607-99da-a5abb9fb5641.ics', null]);
-      testICSEvent([null, 'bcef18f8-b5ff-43a9-bc2c-7109f6e5dc20', 'Test event 6', null, null, null, 'https://zen.coderdojo.com/api/3.0/events/bcef18f8-b5ff-43a9-bc2c-7109f6e5dc20.ics', null]);
-      testICSEvent([null, '072658b7-cabd-4e31-959b-756b65dec760', 'Test event 7', null, null, null, 'https://zen.coderdojo.com/api/3.0/events/072658b7-cabd-4e31-959b-756b65dec760.ics', null]);
-      expect(attributes[51]).to.equal('END:VCALENDAR');
+      testICSEvent([null, '3ae8fc05-55b6-4ea1-ad85-4f385452f764@coderdojo.com', 'Test event 3', null, null, null, null, 'https://zen.coderdojo.com/api/3.0/events/3ae8fc05-55b6-4ea1-ad85-4f385452f764.ics', null]);
+      testICSEvent([null, '0e83d8e7-b991-4e4e-b3bd-36aa956f6754@coderdojo.com', 'Test event 4', null, null, null, null, 'https://zen.coderdojo.com/api/3.0/events/0e83d8e7-b991-4e4e-b3bd-36aa956f6754.ics', null]);
+      testICSEvent([null, '84c0310e-49ff-4607-99da-a5abb9fb5641@coderdojo.com', 'Test event 5', null, null, null, null, 'https://zen.coderdojo.com/api/3.0/events/84c0310e-49ff-4607-99da-a5abb9fb5641.ics', null]);
+      testICSEvent([null, 'bcef18f8-b5ff-43a9-bc2c-7109f6e5dc20@coderdojo.com', 'Test event 6', null, null, null, null, 'https://zen.coderdojo.com/api/3.0/events/bcef18f8-b5ff-43a9-bc2c-7109f6e5dc20.ics', null]);
+      testICSEvent([null, '072658b7-cabd-4e31-959b-756b65dec760@coderdojo.com', 'Test event 7', null, null, null, null, 'https://zen.coderdojo.com/api/3.0/events/072658b7-cabd-4e31-959b-756b65dec760.ics', null]);
+      expect(attributes[56]).to.equal('END:VCALENDAR');
     });
   });
 
