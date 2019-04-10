@@ -214,6 +214,21 @@ describe('integration:events', () => {
       testICSEvent([null, '072658b7-cabd-4e31-959b-756b65dec760@coderdojo.com', 'Test event 7', null, null, null, null, 'https://zen.coderdojo.com/api/3.0/events/072658b7-cabd-4e31-959b-756b65dec760.ics', null]);
       expect(attributes[56]).to.equal('END:VCALENDAR');
     });
+    it('return an empty calendar', async () => {
+      const res = await request(app)
+        .get('/events?query[dojoId]=95b351c7-8228-4a9d-8fcc-b6b8bf2ddaaa')
+        .set('Accept', 'text/calendar')
+        .expect('Content-Type', /text\/calendar/)
+        .expect(200);
+      const attributes = res.text.replace(/\r\n\t/g, '').split('\r\n');
+      expect(attributes[0]).to.equal('BEGIN:VCALENDAR');
+      expect(attributes[1]).to.equal('VERSION:2.0');
+      expect(attributes[2]).to.equal('CALSCALE:GREGORIAN');
+      expect(attributes[3]).to.equal('PRODID:coderdojo/zen');
+      expect(attributes[4]).to.equal('METHOD:PUBLISH');
+      expect(attributes[5]).to.equal('X-PUBLISHED-TTL:PT1H');
+      expect(attributes[6]).to.equal('END:VCALENDAR');
+    });
   });
 
   it('should return a 400 if afterDate is provided without a utcOffset', async () => {
