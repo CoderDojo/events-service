@@ -168,6 +168,53 @@ describe('integration:events', () => {
     expect(res.body.results[4].id).to.equal('bcef18f8-b5ff-43a9-bc2c-7109f6e5dc20');
     expect(res.body.results[4].startTime).to.equal('2018-05-16T10:00:00.000Z');
   });
+  describe('as ICS', () => {
+    it('return the ics as a new calendar', async () => {
+      const res = await request(app)
+        .get('/events?query[dojoId]=95b351c7-8228-4a9d-8fcc-b6b8bf2dd0c2')
+        .set('Accept', 'text/calendar')
+        .expect('Content-Type', /text\/calendar/)
+        .expect(200);
+      const attributes = res.text.replace(/\r\n\t/g, '').split('\r\n');
+      const fields = [
+        'BEGIN:VEVENT',
+        'UID:',
+        'SUMMARY:',
+        /DTSTAMP:[0-9]+T[0-9]+/,
+        /DTSTART:[0-9]+T[0-9]+/,
+        /DTEND:[0-9]+T[0-9]+/,
+        /DESCRIPTION:https:\/\/zen\.coderdojo\.com\/events\/.+/,
+        'URL:',
+        'ORGANIZER;CN=CoderDojo:mailto:info@coderdojo.com',
+        'END:VEVENT',
+      ];
+      let attributeIndex = 6;
+      function testICSEvent(values) {
+        fields.forEach((field, index) => {
+          let expected = fields[index];
+          if (expected.test) {
+            expect(attributes[attributeIndex + index]).to.match(expected);
+          } else {
+            if (values[index]) expected += values[index];
+            expect(attributes[attributeIndex + index]).to.equal(expected);
+          }
+        });
+        attributeIndex += fields.length;
+      }
+      expect(attributes[0]).to.equal('BEGIN:VCALENDAR');
+      expect(attributes[1]).to.equal('VERSION:2.0');
+      expect(attributes[2]).to.equal('CALSCALE:GREGORIAN');
+      expect(attributes[3]).to.equal('PRODID:coderdojo/zen');
+      expect(attributes[4]).to.equal('METHOD:PUBLISH');
+      expect(attributes[5]).to.equal('X-PUBLISHED-TTL:PT1H');
+      testICSEvent([null, '3ae8fc05-55b6-4ea1-ad85-4f385452f764@coderdojo.com', 'Test event 3', null, null, null, null, 'https://zen.coderdojo.com/api/3.0/events/3ae8fc05-55b6-4ea1-ad85-4f385452f764.ics', null]);
+      testICSEvent([null, '0e83d8e7-b991-4e4e-b3bd-36aa956f6754@coderdojo.com', 'Test event 4', null, null, null, null, 'https://zen.coderdojo.com/api/3.0/events/0e83d8e7-b991-4e4e-b3bd-36aa956f6754.ics', null]);
+      testICSEvent([null, '84c0310e-49ff-4607-99da-a5abb9fb5641@coderdojo.com', 'Test event 5', null, null, null, null, 'https://zen.coderdojo.com/api/3.0/events/84c0310e-49ff-4607-99da-a5abb9fb5641.ics', null]);
+      testICSEvent([null, 'bcef18f8-b5ff-43a9-bc2c-7109f6e5dc20@coderdojo.com', 'Test event 6', null, null, null, null, 'https://zen.coderdojo.com/api/3.0/events/bcef18f8-b5ff-43a9-bc2c-7109f6e5dc20.ics', null]);
+      testICSEvent([null, '072658b7-cabd-4e31-959b-756b65dec760@coderdojo.com', 'Test event 7', null, null, null, null, 'https://zen.coderdojo.com/api/3.0/events/072658b7-cabd-4e31-959b-756b65dec760.ics', null]);
+      expect(attributes[56]).to.equal('END:VCALENDAR');
+    });
+  });
 
   it('should return a 400 if afterDate is provided without a utcOffset', async () => {
     await request(app)
