@@ -1,5 +1,6 @@
 const { raw } = require('objection');
 const EventOccurrencesModel = require('./models/EventOccurrencesModel');
+const EventModel = require('./models/EventModel');
 
 
 class EventsController {
@@ -35,6 +36,9 @@ class EventsController {
       .modifyEager('sessions.tickets', _builder =>
         _builder.applyFilter('publicFields')
           .applyFilter('approvedApplications'));
+  }
+  static async create(event) {
+    return EventModel.query().insert(event).returning('*');
   }
 }
 

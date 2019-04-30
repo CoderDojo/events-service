@@ -1,4 +1,5 @@
 const { Model } = require('objection');
+const uuid = require('uuid/v4');
 const { notEnoughCapacityError } = require('../errors');
 const ApplicationModel = require('../../applications/models/ApplicationModel');
 
@@ -37,6 +38,11 @@ class TicketModel extends Model {
         },
       },
     };
+  }
+
+  async $beforeInsert(context) {
+    await super.$beforeInsert(context);
+    this.id = uuid();
   }
 
   hasCapacityFor(qty) {

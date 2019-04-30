@@ -1,6 +1,7 @@
 const { Model, QueryBuilder } = require('objection');
 const Session = require('../../sessions/models/SessionModel');
 
+// TODO: make it derivate from EventModel ?
 class EventOccurrencesModel extends Model {
   static get tableName() {
     return 'v_event_occurrences';
