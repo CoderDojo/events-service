@@ -8,7 +8,7 @@ const SessionModel = proxy('../../../../sessions/models/SessionModel', {
     },
   },
 });
-describe.only('SessionModel', () => {
+describe('SessionModel', () => {
   let sandbox;
   before(() => {
     sandbox = sinon.createSandbox();
