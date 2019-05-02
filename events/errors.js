@@ -5,7 +5,7 @@ class InvalidStatus extends Error {
     this.message = 'Invalid status';
   }
 }
-class StatusNotHandled extends Error {
+class TypeNotHandled extends Error {
   constructor() {
     super();
     this.status = 400;
@@ -15,5 +15,5 @@ class StatusNotHandled extends Error {
 
 module.exports = {
   InvalidStatus: new InvalidStatus(),
-  StatusNotHandled: new StatusNotHandled(),
+  TypeNotHandled: new TypeNotHandled(),
 };

@@ -1,7 +1,7 @@
 const request = require('supertest');
 const Model = require('../../events/models/EventModel');
 
-describe.only('integration:events:create', () => {
+describe('integration:events:create', () => {
   let app;
   const defaultPayload = {
     name: 'Test Event',

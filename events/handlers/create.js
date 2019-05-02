@@ -2,14 +2,14 @@ const EventsController = require('../controller');
 const SessionsController = require('../../sessions/controller');
 const TicketsController = require('../../tickets/controller');
 const Model = require('../models/EventModel');
-const { StatusNotHandled, InvalidStatus } = require('../errors');
+const { TypeNotHandled, InvalidStatus } = require('../errors');
 
 module.exports = [
   async (req, res, next) => {
     const { type, status } = req.body;
     // Custom business validation
     if (!Model.isEditable(status)) return next(InvalidStatus);
-    if (type !== Model.types.ONE_OFF) return next(StatusNotHandled);
+    if (type !== Model.types.ONE_OFF) return next(TypeNotHandled);
     // Prepare different models so they can be consumed easily afterwards
     res.locals.event = req.body;
     res.locals.sessions = req.body.sessions;
