@@ -8,15 +8,16 @@ module.exports = (_baseline) => {
     },
     [`${baseline}type`]: {
       in: ['body'],
-      options: {
-        custom(value) {
-          return Model.TYPES.indexOf(value) > -1;
+      // TODO: this syntax needs fixing
+      custom: {
+        options: (value) => {
+          return Object.values(Model.TYPES).indexOf(value) > -1;
         },
       },
     },
     [`${baseline}quantity`]: {
       in: ['body'],
-      isInteger: true,
+      isInt: true,
     },
   };
 };

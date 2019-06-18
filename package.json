@@ -12,8 +12,8 @@
     "dev": "nodemon -x \"node --trace-warnings --inspect=0.0.0.0 index.js\"",
     "lint": "eslint .",
     "precommit": "lint-staged",
-    "unit": "NODE_ENV=test mocha -t 10000 --require ./test/helper.js ./test/unit --recursive --reporter=nyan --forbid-pending --full-trace --exit",
-    "int": "NODE_ENV=test mocha -t 10000 --require ./test/helper.js ./test/integration --recursive --reporter=nyan --forbid-pending --full-trace --exit",
+    "unit": "NODE_ENV=test ICS_EVENT_URL=https://zen.coderdojo.com/api/3.0/events/ EVENT_URL=https://zen.coderdojo.com/events/ mocha -t 10000 --require ./test/helper.js ./test/unit --recursive --forbid-pending --full-trace --exit",
+    "int": "NODE_ENV=test ICS_EVENT_URL=https://zen.coderdojo.com/api/3.0/events/ EVENT_URL=https://zen.coderdojo.com/events/ mocha -t 10000 --require ./test/helper.js ./test/integration --recursive --forbid-pending --full-trace --exit",
     "test": "concurrently \"yarn int\" \"yarn unit\""
   },
   "lint-staged": {

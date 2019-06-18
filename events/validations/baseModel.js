@@ -18,7 +18,7 @@ module.exports = {
   },
   description: {
     in: ['body'],
-    optional: true,
+    exists: { options: { checkFalsy: true, checkNull: true } },
   },
   public: {
     in: ['body'],
@@ -59,17 +59,14 @@ module.exports = {
   },
   country: {
     in: ['body'],
-    isJSON: true,
+    exists: { options: { checkFalsy: true, checkNull: true } },
   },
   city: {
     in: ['body'],
-    isJSON: true,
+    exists: { options: { checkFalsy: true, checkNull: true } },
   },
   address: {
     in: ['body'],
-  },
-  position: {
-    in: ['body'],
-    isJSON: true,
+    exists: { options: { checkFalsy: true, checkNull: true } },
   },
 };
