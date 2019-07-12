@@ -40,6 +40,9 @@ class EventsController {
   static async create(event) {
     return EventModel.query().insert(event).returning('*');
   }
+  static async update(event) {
+    return EventModel.query().patchAndFetchById(event.id, event).returning('*');
+  }
 }
 
 module.exports = EventsController;

@@ -18,6 +18,9 @@ class TicketsController {
   static async create(ticket) {
     return TicketModel.query().insert(ticket).returning('*');
   }
+  static async update(ticket) {
+    return TicketModel.query().patchAndFetchById(ticket.id, ticket).returning('*');
+  }
   async load({ query, related, filters }) {
     return this.constructor.load({ query, related, filters }, this.builder);
   }

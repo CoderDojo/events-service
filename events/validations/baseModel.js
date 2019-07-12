@@ -69,4 +69,8 @@ module.exports = {
     in: ['body'],
     exists: { options: { checkFalsy: true, checkNull: true } },
   },
+  newForm: {
+    in: ['body'],
+    isBoolean: true,
+  },
 };
