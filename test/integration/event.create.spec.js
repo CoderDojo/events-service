@@ -23,6 +23,7 @@ describe('integration:events:create', () => {
     },
     city: { nameWithHierarchy: 'Sheffield' },
     dates: [],
+    newForm: true,
     sessions: [{
       name: 'Room A Floor 66',
       description: 'a description',
