@@ -82,7 +82,7 @@ describe('integration:events:create', () => {
       .expect('Content-Type', /json/)
       .expect(400);
   });
-  it('should return 400 if the status is out of the flow', async () => {
+  it('should return 400 if the event status is cancelled', async () => {
     const payload = Object.assign({}, defaultPayload);
     payload.status = 'cancelled';
     const res = await request(app)
@@ -91,13 +91,13 @@ describe('integration:events:create', () => {
       .expect(400);
     expect(res.text).to.equal('Invalid status');
   });
-  it('should return 400 if the status is out of the flow', async () => {
+  it('should return 501 if the event type is recurring', async () => {
     const payload = Object.assign({}, defaultPayload);
     payload.type = 'recurring';
     const res = await request(app)
       .post('/events')
       .send(payload)
-      .expect(400);
+      .expect(501);
     expect(res.text).to.equal('Recurring events are not implemented (yet)');
   });
 });

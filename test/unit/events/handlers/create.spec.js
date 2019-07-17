@@ -54,7 +54,7 @@ describe('events/handlers:create', () => {
       expect(next).to.have.been.calledOnce;
       const e = next.getCall(0).args[0];
       expect(e.message).to.equal('Recurring events are not implemented (yet)');
-      expect(e.status).to.equal(400);
+      expect(e.status).to.equal(501);
     });
     it('should prepare the variables for the next steps', async () => {
       req.body = {

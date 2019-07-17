@@ -8,7 +8,7 @@ class InvalidStatus extends Error {
 class TypeNotHandled extends Error {
   constructor() {
     super();
-    this.status = 400;
+    this.status = 501;
     this.message = 'Recurring events are not implemented (yet)';
   }
 }
