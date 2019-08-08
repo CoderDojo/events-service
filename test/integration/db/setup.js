@@ -30,6 +30,7 @@ before(async () => {
       password: 'QdYx3D5y',
       database: name,
     },
+    // debug: true,
     ...knexSnakeCaseMappers(),
   });
   createdDbs.push({

@@ -19,6 +19,7 @@ CREATE TABLE cd_events (
     eventbrite_id character varying,
     eventbrite_url character varying,
     use_dojo_address boolean,
+    new_form boolean DEFAULT false,
     CONSTRAINT pk_cd_events_id PRIMARY KEY (id)
 );
 

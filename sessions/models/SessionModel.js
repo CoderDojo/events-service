@@ -1,4 +1,5 @@
 const { Model } = require('objection');
+const uuid = require('uuid/v4');
 const TicketModel = require('../../tickets/models/TicketModel');
 
 class SessionModel extends Model {
@@ -8,10 +9,15 @@ class SessionModel extends Model {
       CANCELLED: 'cancelled',
     };
   }
+  async $beforeInsert(context) {
+    await super.$beforeInsert(context);
+    this.id = uuid();
+    this.status = SessionModel.STATUSES.ACTIVE;
+  }
   static get namedFilters() {
     return {
       active: builder => builder.where('status', '=', SessionModel.STATUSES.ACTIVE),
-      inactive: builder => builder.where('status', '=', SessionModel.STATUSES.INACTIVE),
+      inactive: builder => builder.where('status', '=', SessionModel.STATUSES.CANCELLED),
     };
   }
   static get tableName() {

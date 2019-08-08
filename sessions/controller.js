@@ -8,6 +8,9 @@ class SessionsController {
       .modifyEager(qb => qb.applyFilter(SessionModel.active))
       .where(query);
   }
+  static async create(session) {
+    return SessionModel.query().insert(session).returning('*');
+  }
 }
 
 module.exports = SessionsController;
